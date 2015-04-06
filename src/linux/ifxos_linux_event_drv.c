@@ -28,9 +28,7 @@
 
 #include <linux/kernel.h>
 #include <linux/version.h>
-#ifdef MODULE
-   #include <linux/module.h>
-#endif
+#include <linux/module.h>
 
 #include <linux/sched.h>
 #include <linux/wait.h>
@@ -210,12 +208,10 @@ IFX_int_t IFXOS_EventWait(
 
 /** @} */
 
-#ifdef MODULE
 EXPORT_SYMBOL(IFXOS_EventInit);
 EXPORT_SYMBOL(IFXOS_EventDelete);
 EXPORT_SYMBOL(IFXOS_EventWakeUp);
 EXPORT_SYMBOL(IFXOS_EventWait);
-#endif
 
 #endif      /* #ifdef __KERNEL__ */
 #endif      /* #ifdef LINUX */

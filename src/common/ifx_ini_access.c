@@ -47,10 +47,14 @@ IFX_int32_t GetKeyInt(
    IFX_int32_t nDefault,      /**< return value if key name not found */
    IFX_char_t* pFile          /**< pointer to file data (array with \0 at end) */)
 {
-   IFX_char_t  RetString[15];
+   IFX_char_t  RetString[15], sDefault[15];
    IFX_int32_t ret = nDefault;
 
-   if ( GetKeyString(pSectionName, pKeyName, "", &RetString[0], sizeof(RetString), pFile) > 0 )
+   snprintf(sDefault, sizeof(sDefault), "%d", nDefault);
+   RetString[sizeof(sDefault)-1] = '\0';
+
+   if ( GetKeyString(pSectionName, pKeyName, sDefault, &RetString[0],
+      sizeof(RetString), pFile) > 0 )
    {
       /* get assigned value of the key and return */
       if ( RetString[0] == '0' && RetString[1] == 'x' )

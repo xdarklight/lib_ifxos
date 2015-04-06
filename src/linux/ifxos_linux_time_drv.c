@@ -26,9 +26,7 @@
    ========================================================================= */
 
 #include <linux/kernel.h>
-#ifdef MODULE
-   #include <linux/module.h>
-#endif
+#include <linux/module.h>
 #include <linux/sched.h>
 #include <asm/delay.h> 
 #include <linux/delay.h>
@@ -140,11 +138,9 @@ IFX_time_t IFXOS_ElapsedTimeMSecGet(
 
 /** @} */
 
-#ifdef MODULE
 EXPORT_SYMBOL(IFXOS_USecSleep);
 EXPORT_SYMBOL(IFXOS_MSecSleep);
 EXPORT_SYMBOL(IFXOS_ElapsedTimeMSecGet);
-#endif
 
 #endif      /* #ifdef __KERNEL__ */
 #endif      /* #ifdef LINUX */

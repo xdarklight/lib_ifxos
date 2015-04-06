@@ -26,9 +26,7 @@
    ========================================================================= */
 
 #include <linux/kernel.h>
-#ifdef MODULE
-   #include <linux/module.h>
-#endif
+#include <linux/module.h>
 #include <linux/ioport.h>
 #include <asm/io.h>
 
@@ -176,10 +174,8 @@ IFX_int32_t IFXOS_Phy2VirtUnmap(
 
 /** @} */
 
-#ifdef MODULE
 EXPORT_SYMBOL(IFXOS_Phy2VirtMap);
 EXPORT_SYMBOL(IFXOS_Phy2VirtUnmap);
-#endif
 
 #endif      /* #ifdef __KERNEL__ */
 #endif      /* #ifdef LINUX */

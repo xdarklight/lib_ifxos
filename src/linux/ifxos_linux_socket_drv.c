@@ -20,9 +20,7 @@
    IFX Linux adaptation - Global Includes - Kernel
    ========================================================================= */
 #include <linux/kernel.h>
-#ifdef MODULE
-   #include <linux/module.h>
-#endif
+#include <linux/module.h>
 #include <linux/in.h>
 #include <linux/net.h>
 #include <asm/uaccess.h>
@@ -305,7 +303,6 @@ IFX_int_t IFXOS_SocketAton(
 
 /** @} */
 
-#ifdef MODULE
 EXPORT_SYMBOL(IFXOS_SocketInit);
 EXPORT_SYMBOL(IFXOS_SocketCleanup);
 EXPORT_SYMBOL(IFXOS_SocketCreate);
@@ -313,7 +310,6 @@ EXPORT_SYMBOL(IFXOS_SocketClose);
 EXPORT_SYMBOL(IFXOS_SocketSendTo);
 EXPORT_SYMBOL(IFXOS_SocketBind);
 EXPORT_SYMBOL(IFXOS_SocketAton);
-#endif
 
 #endif      /* #ifdef __KERNEL__ */
 #endif      /* #ifdef LINUX */

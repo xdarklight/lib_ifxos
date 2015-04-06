@@ -105,7 +105,7 @@
 /** IFXOS version - feature */
 #define IFXOS_VERSION_FEATURE                 5
 /** IFXOS version, build number - step */
-#define IFXOS_VERSION_STEP                    14
+#define IFXOS_VERSION_STEP                    16
 
 /** IFXOS version as number */
 #define IFXOS_VER_NUMBER \

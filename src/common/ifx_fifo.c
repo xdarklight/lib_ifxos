@@ -369,7 +369,7 @@ IFX_ulong_t* IFX_Var_Fifo_readElement (IFX_VFIFO *pFifo, IFX_uint32_t *elSizeB)
       return IFX_NULL;
    }
 
-   if ((pFifo->pRead[0] == ~0) ||
+   if ((pFifo->pRead[0] == (IFX_ulong_t)~0) ||
        ((pFifo->pEnd - pFifo->pRead) <= (SIZE_HEADER + SIZE_TRAILER)))
    {
       pFifo->pRead = pFifo->pStart;
@@ -454,7 +454,7 @@ IFX_ulong_t* IFX_Var_Fifo_peekElement (IFX_VFIFO *pFifo, IFX_uint32_t *elSizeB)
       return IFX_NULL;
    }
 
-   if ((pPeekRead[0] == ~0) ||
+   if ((pPeekRead[0] == (IFX_ulong_t)~0) ||
        ((pFifo->pEnd - pPeekRead) <= (SIZE_HEADER + SIZE_TRAILER)))
    {
       pPeekRead = pFifo->pStart;

@@ -26,9 +26,7 @@
    ========================================================================= */
 
 #include <linux/kernel.h>
-#ifdef MODULE
-   #include <linux/module.h>
-#endif
+#include <linux/module.h>
 #include <linux/sched.h>
 
 #include "ifx_types.h"
@@ -152,12 +150,10 @@ IFX_int32_t IFXOS_MutexDelete(
 #endif      /* #if ( defined(IFXOS_HAVE_MUTEX) && (IFXOS_HAVE_MUTEX == 1) ) */
 /** @} */
 
-#ifdef MODULE
 EXPORT_SYMBOL(IFXOS_MutexInit);
 EXPORT_SYMBOL(IFXOS_MutexGet);
 EXPORT_SYMBOL(IFXOS_MutexRelease);
 EXPORT_SYMBOL(IFXOS_MutexDelete);
-#endif
 
 #endif      /* #ifdef __KERNEL__ */
 #endif      /* #ifdef LINUX */

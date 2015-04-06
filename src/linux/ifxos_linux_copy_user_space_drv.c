@@ -26,9 +26,7 @@
    ========================================================================= */
 
 #include <linux/kernel.h>
-#ifdef MODULE
-   #include <linux/module.h>
-#endif
+#include <linux/module.h>
 #include <asm/uaccess.h>
 
 #include "ifx_types.h"
@@ -110,10 +108,8 @@ IFX_void_t *IFXOS_CpyToUser(
 
 /** @} */
 
-#ifdef MODULE
 EXPORT_SYMBOL(IFXOS_CpyFromUser);
 EXPORT_SYMBOL(IFXOS_CpyToUser);
-#endif
 
 #endif      /* #ifdef __KERNEL__ */
 #endif      /* #ifdef LINUX */

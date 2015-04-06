@@ -34,9 +34,7 @@
 #ifdef __KERNEL__
 #  include <linux/kernel.h>
 #endif
-#ifdef MODULE
 #  include <linux/module.h>
-#endif
 
 #include <linux/version.h>
 #include <linux/init.h>

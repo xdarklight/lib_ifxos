@@ -28,13 +28,13 @@
    ========================================================================= */
 
 #include <linux/kernel.h>
-#ifdef MODULE
-   #include <linux/module.h>
-#endif
+#include <linux/module.h>
 #include <linux/sched.h>
 #include <linux/version.h>
 #include <linux/completion.h>
+#if (LINUX_VERSION_CODE < KERNEL_VERSION(2,6,33))
 #include <linux/smp_lock.h>
+#endif
 #include <linux/signal.h>
 
 
@@ -147,7 +147,8 @@ IFXOS_STATIC IFX_int32_t IFXOS_KernelThreadStartup(
    allow_signal(SIGTERM);
 #endif
 
-   IFXOS_ThreadPriorityModify(pThrCntrl->nPriority);
+   if (pThrCntrl->nPriority)
+      IFXOS_ThreadPriorityModify(pThrCntrl->nPriority);
 
    pThrCntrl->thrParams.bRunning = IFX_TRUE;
    retVal = pThrCntrl->pThrFct(&pThrCntrl->thrParams);
@@ -483,12 +484,10 @@ IFXOS_process_t IFXOS_ProcessIdGet(void)
 
 /** @} */
 
-#ifdef MODULE
 EXPORT_SYMBOL(IFXOS_ThreadInit);
 EXPORT_SYMBOL(IFXOS_ThreadDelete);
 EXPORT_SYMBOL(IFXOS_ThreadShutdown);
 EXPORT_SYMBOL(IFXOS_ThreadPriorityModify);
-#endif
 
 #endif      /* #ifdef __KERNEL__ */
 #endif      /* #ifdef LINUX */

@@ -27,9 +27,7 @@
    ========================================================================= */
 
 #include <linux/kernel.h>
-#ifdef MODULE
-   #include <linux/module.h>
-#endif
+#include <linux/module.h>
 #include <linux/fs.h>
 #include <linux/wait.h>
 #include <linux/poll.h>
@@ -141,11 +139,9 @@ IFX_int32_t IFXOS_DrvSelectQueueAddTask(
 
 /** @} */
 
-#ifdef MODULE
 EXPORT_SYMBOL(IFXOS_DrvSelectQueueInit);
 EXPORT_SYMBOL(IFXOS_DrvSelectQueueWakeUp);
 EXPORT_SYMBOL(IFXOS_DrvSelectQueueAddTask);
-#endif
 
 #endif      /* #ifdef __KERNEL__ */
 #endif      /* #ifdef LINUX */

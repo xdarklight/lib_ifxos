@@ -33,9 +33,7 @@
    ========================================================================= */
 
 #include <linux/kernel.h>
-#ifdef MODULE
-   #include <linux/module.h>
-#endif
+#include <linux/module.h>
 #include <linux/slab.h>
 #include <linux/vmalloc.h>
 
@@ -182,12 +180,10 @@ IFX_void_t IFXOS_MemFree(
 
 /** @} */
 
-#ifdef MODULE
 EXPORT_SYMBOL(IFXOS_BlockAlloc);
 EXPORT_SYMBOL(IFXOS_BlockFree);
 EXPORT_SYMBOL(IFXOS_MemAlloc);
 EXPORT_SYMBOL(IFXOS_MemFree);
-#endif
 
 #endif      /* #ifdef __KERNEL__ */
 #endif      /* #ifdef LINUX */

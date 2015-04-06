@@ -27,9 +27,7 @@
    ========================================================================= */
 
 #include <linux/kernel.h>
-#ifdef MODULE
-   #include <linux/module.h>
-#endif
+#include <linux/module.h>
 #include <linux/sched.h>
 
 #include "ifx_types.h"
@@ -329,7 +327,6 @@ IFX_int32_t IFXOS_LockTimedGet(
 #endif      /* #if ( defined(IFXOS_HAVE_LOCK_TIMEOUT) && (IFXOS_HAVE_LOCK_TIMEOUT == 1) ) */
 /** @} */
 
-#ifdef MODULE
 
 #if ( defined(IFXOS_HAVE_LOCK) && (IFXOS_HAVE_LOCK == 1) )
 EXPORT_SYMBOL(IFXOS_LockInit);
@@ -343,7 +340,6 @@ EXPORT_SYMBOL(IFXOS_LockRelease);
 EXPORT_SYMBOL(IFXOS_NamedLockInit);
 #endif
 
-#endif
 
 #endif      /* #ifdef __KERNEL__ */
 #endif      /* #ifdef LINUX */
