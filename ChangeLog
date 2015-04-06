@@ -1,5 +1,8 @@
 NEXT VERSION
 
+V1.5.16 - Unknown
+-
+
 V1.5.14 - 2010-07-22
 FIX:
 - Portability: configure.in, Makefile.am - remove some OS specific options for the echo command.
