@@ -1,8 +1,8 @@
 /******************************************************************************
 
-                               Copyright  2007
-                            Infineon Technologies AG
-                     Am Campeon 1-12; 81726 Munich, Germany
+                              Copyright (c) 2009
+                            Lantiq Deutschland GmbH
+                     Am Campeon 3; 85579 Neubiberg, Germany
 
   For licensing information, see the file 'LICENSE' in the root folder of
   this software module.
@@ -148,6 +148,7 @@ IFX_size_t CFG_LoadFile(IFX_char_t *filename, IFX_char_t **ppFileIn)
 
       IFXOS_PRN_USR_DBG_NL(CFG_MODULE, IFXOS_PRN_LEVEL_HIGH, (CFG_PREFIX"ERROR - Get size for file <%s> failed!!\r\n\r", filename));
 
+      IFXOS_FClose(filefd);
       return IFX_ERROR;
    }
 
@@ -888,6 +889,7 @@ IFX_uint32_t CFG_SetBoardConfigFromArray(const CFG_BOARD_REGISTER *regArray)
       /* wrong array */
       IFXOS_PRN_USR_DBG_NL(CFG_MODULE, IFXOS_PRN_LEVEL_HIGH,
                (CFG_PREFIX"ERROR - Wrong board configuration array!!\n\r"));
+      return IFX_ERROR;
    }
 
    /* check if the written register's value has to be tested */

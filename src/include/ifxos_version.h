@@ -1,8 +1,8 @@
 /******************************************************************************
 
-                               Copyright  2007
-                            Infineon Technologies AG
-                     Am Campeon 1-12; 81726 Munich, Germany
+                              Copyright (c) 2009
+                            Lantiq Deutschland GmbH
+                     Am Campeon 3; 85579 Neubiberg, Germany
 
   For licensing information, see the file 'LICENSE' in the root folder of
   this software module.
@@ -105,7 +105,7 @@
 /** IFXOS version - feature */
 #define IFXOS_VERSION_FEATURE                 5
 /** IFXOS version, build number - step */
-#define IFXOS_VERSION_STEP                    10
+#define IFXOS_VERSION_STEP                    12
 
 /** IFXOS version as number */
 #define IFXOS_VER_NUMBER \

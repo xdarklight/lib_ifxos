@@ -2,9 +2,9 @@
 #define _IFXOS_GENERIC_OS_INTERRUPT_H
 /******************************************************************************
 
-                               Copyright  2007
-                            Infineon Technologies AG
-                     Am Campeon 1-12; 81726 Munich, Germany
+                              Copyright (c) 2009
+                            Lantiq Deutschland GmbH
+                     Am Campeon 3; 85579 Neubiberg, Germany
 
   For licensing information, see the file 'LICENSE' in the root folder of
   this software module.
@@ -31,7 +31,6 @@
    IFX Generic OS adaptation - Includes
    ========================================================================= */
 #include "ifx_types.h"
-#include <intLib.h>
 
 /* ============================================================================
    IFX Generic OS adaptation - supported features

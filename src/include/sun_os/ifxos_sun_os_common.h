@@ -2,9 +2,9 @@
 #define _IFXOS_SUN_OS_COMMON_H
 /******************************************************************************
 
-                               Copyright  2008
-                            Infineon Technologies AG
-                     Am Campeon 1-12; 81726 Munich, Germany
+                              Copyright (c) 2009
+                            Lantiq Deutschland GmbH
+                     Am Campeon 3; 85579 Neubiberg, Germany
 
   For licensing information, see the file 'LICENSE' in the root folder of
   this software module.
@@ -85,7 +85,7 @@
    /** set the common IFXOS byte order for BIG endian */
 #  define IFXOS_BYTE_ORDER                   IFXOS_BIG_ENDIAN
 
-#elif
+#else
 #  error "missing endian definiton"
 #endif
 
@@ -145,7 +145,13 @@
 #  define IFXOS_BYTE_ORDER                   IFXOS_BIG_ENDIAN
 
 #else
-#  warning "missing endian definiton"
+#  ifdef _MSC_VER
+#     pragma message( "missing endian definiton" )
+#  endif
+#  if defined (__GNUC__) || defined (__GNUG__)
+#     warning "missing endian definiton"
+#  endif 
+
    /** set the common IFXOS byte order for BIG endian */
 #  define IFXOS_BYTE_ORDER                   IFXOS_BIG_ENDIAN
 

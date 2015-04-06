@@ -2,9 +2,9 @@
 #define _IFXOS_SOCKET_H
 /******************************************************************************
 
-                               Copyright  2007
-                            Infineon Technologies AG
-                     Am Campeon 1-12; 81726 Munich, Germany
+                              Copyright (c) 2009
+                            Lantiq Deutschland GmbH
+                     Am Campeon 3; 85579 Neubiberg, Germany
 
   For licensing information, see the file 'LICENSE' in the root folder of
   this software module.
@@ -172,8 +172,10 @@ IFX_int_t IFXOS_SocketShutdown(
 \param
    timeout_ms       specifies behaviour if event is not available:
                               - IFXOS_SOC_NO_WAIT: do not wait for the event
-                              - IFXOS_SOC_WAIT_FOREVER: wait till event is available
-                              - other int value: number of system ticks for timeout
+                              - IFXOS_SOC_WAIT_FOREVER: wait till event is 
+                              available
+                              - other int value: number of system ticks for 
+                              timeout
 
 \return
    Returns 0 on timeout, a positive value on receiving a event
@@ -192,7 +194,8 @@ IFX_int_t IFXOS_SocketSelect(
 \param
    socFd          specifies the socket. Value has to be greater or equal zero
 \param
-   pBuffer        specifies the pointer to a buffer where the data will be copied
+   pBuffer        specifies the pointer to a buffer where the data will be 
+                  copied
 \param
    bufSize_byte   specifies the size in byte of the buffer 'pBuffer'
 
@@ -211,7 +214,8 @@ IFX_int_t IFXOS_SocketRecv(
 \param
    socFd          specifies the socket. Value has to be greater or equal zero
 \param
-   pBuffer        specifies the pointer to a buffer where the data will be copied
+   pBuffer        specifies the pointer to a buffer where the data will be 
+                  copied
 \param
    bufSize_byte   specifies the size in byte of the buffer 'pBuffer'
 \param
@@ -233,12 +237,13 @@ IFX_int_t IFXOS_SocketRecvFrom(
 \param
    socFd          specifies the socket. Value has to be greater or equal zero
 \param
-   pBuffer        specifies the pointer to a buffer where the data will be copied
+   pBuffer        specifies the pointer to a buffer where the data will be 
+                  copied
 \param
    bufSize_byte   specifies the size in byte of the buffer 'pBuffer'
 
 \return
-   Returns the number of received bytes. Returns a negative value if an error
+   Returns the number of sent bytes. Returns a negative value if an error
    occured
 */ 
 IFX_int_t IFXOS_SocketSend(
@@ -252,12 +257,13 @@ IFX_int_t IFXOS_SocketSend(
 \param
    socFd          specifies the socket. Value has to be greater or equal zero
 \param
-   pBuffer        specifies the pointer to a buffer where the data will be copied
+   pBuffer        specifies the pointer to a buffer where the data will be 
+                  copied
 \param
    bufSize_byte   specifies the size in byte of the buffer 'pBuffer'
 
 \return
-   Returns the number of received bytes. Returns a negative value if an error
+   Returns the number of sent bytes. Returns a negative value if an error
    occured
 */ 
 IFX_int_t IFXOS_SocketSendTo(

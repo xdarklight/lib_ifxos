@@ -1,8 +1,8 @@
 /******************************************************************************
 
-                               Copyright  2007
-                            Infineon Technologies AG
-                     Am Campeon 1-12; 81726 Munich, Germany
+                              Copyright (c) 2009
+                            Lantiq Deutschland GmbH
+                     Am Campeon 3; 85579 Neubiberg, Germany
 
   For licensing information, see the file 'LICENSE' in the root folder of
   this software module.
@@ -131,7 +131,7 @@ IFX_int_t IFXOS_FClose(
 
 */
 IFX_size_t IFXOS_FRead(
-                  IFX_void_t     *pDataBuf, 
+                  IFX_void_t     *pDataBuf,
                   IFX_size_t     elementSize_byte,  
                   IFX_size_t     elementCount, 
                   IFXOS_File_t   *stream)
@@ -169,7 +169,7 @@ IFX_size_t IFXOS_FRead(
    Number of written elements.
 */
 IFX_size_t IFXOS_FWrite(
-                  const IFX_void_t  *pDataBuf, 
+                  const IFX_void_t  *pDataBuf,
                   IFX_size_t        elementSize_byte,  
                   IFX_size_t        elementCount, 
                   IFXOS_File_t      *stream)
@@ -273,6 +273,10 @@ IFX_int_t IFXOS_Stat(
   The required data buffer is allocated and it is in the responsibility of the
   user to free the buffer in a later step.
 
+\remarks
+   Allocate file size + 1 to terminate the buffer with '\0'.
+   This will allow other functions to parse the buffer without the size info.
+
 \param
    pName          - Points to the file name.
 \param
@@ -285,8 +289,8 @@ IFX_int_t IFXOS_Stat(
    - IFX_ERROR in case of errors
 */
 IFX_size_t IFXOS_FileLoad (
-                  IFX_char_t const  *pName, 
-                  IFX_uint8_t       **ppDataBuf, 
+                  IFX_char_t const  *pName,
+                  IFX_uint8_t       **ppDataBuf,
                   IFX_size_t        *pBufSize_byte)
 {
 #if (IFXOS_HAVE_FILESYSTEM == 1)
@@ -295,6 +299,8 @@ IFX_size_t IFXOS_FileLoad (
       Fill with your customer OS implementation like:
       - get the file statistics
       - allocate memory for load the file
+        --> Allocate file size + 1 - to add null termination
+        --> terminate the file buffer
       - open and load the file
       - close the file
       - set the return values
@@ -332,8 +338,8 @@ IFX_size_t IFXOS_FileLoad (
    - IFX_ERROR in case of errors
 */
 IFX_size_t IFXOS_FileWrite (
-                  IFX_char_t const  *pName, 
-                  IFX_uint8_t       *pDataBuf, 
+                  IFX_char_t const  *pName,
+                  IFX_uint8_t       *pDataBuf,
                   IFX_size_t        bufSize_byte)
 {
 #if (IFXOS_HAVE_FILESYSTEM == 1)

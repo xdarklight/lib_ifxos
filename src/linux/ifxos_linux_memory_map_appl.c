@@ -1,8 +1,8 @@
 /******************************************************************************
 
-                               Copyright  2007
-                            Infineon Technologies AG
-                     Am Campeon 1-12; 81726 Munich, Germany
+                              Copyright (c) 2009
+                            Lantiq Deutschland GmbH
+                     Am Campeon 3; 85579 Neubiberg, Germany
 
   For licensing information, see the file 'LICENSE' in the root folder of
   this software module.
@@ -69,8 +69,8 @@ IFX_int32_t IFXOS_Phy2VirtMap(
                IFX_uint8_t    **ppVirtAddr)
 {
    IFXOS_PRN_USR_DBG_NL( IFXOS, IFXOS_PRN_LEVEL_LOW,
-      ("IFXOS: Phy2Virt map - phy 0x%08X --> virt 0x%08X, size = 0x%X" IFXOS_CRLF, 
-        physicalAddr, (unsigned int)physicalAddr, addrRangeSize_byte ));
+      ("IFXOS: Phy2Virt map - phy 0x%08lX --> virt 0x%08X, size = 0x%X" IFXOS_CRLF, 
+        physicalAddr, physicalAddr, addrRangeSize_byte ));
 
    IFXOS_RETURN_IF_POINTER_NULL(ppVirtAddr, IFX_ERROR);
    IFXOS_RETURN_IF_POINTER_NOT_NULL(*ppVirtAddr, IFX_ERROR);
@@ -114,8 +114,8 @@ IFX_int32_t IFXOS_Phy2VirtUnmap(
    if (ppVirtAddr != IFX_NULL)
    {
       IFXOS_PRN_USR_DBG_NL( IFXOS, IFXOS_PRN_LEVEL_LOW,
-         ("IFXOS: Phy2Virt Unmap - unmap virt 0x%08X, size = 0x%X" IFXOS_CRLF, 
-           (unsigned int)(*ppVirtAddr), addrRangeSize_byte ));
+         ("IFXOS: Phy2Virt Unmap - unmap virt 0x%08lX, size = 0x%X" IFXOS_CRLF, 
+                         (*ppVirtAddr), addrRangeSize_byte ));
 
       *ppVirtAddr = IFX_NULL;
    }

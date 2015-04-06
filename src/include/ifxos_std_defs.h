@@ -2,9 +2,9 @@
 #define _IFXOS_STD_DEFS_H
 /******************************************************************************
 
-                               Copyright  2007
-                            Infineon Technologies AG
-                     Am Campeon 1-12; 81726 Munich, Germany
+                              Copyright (c) 2009
+                            Lantiq Deutschland GmbH
+                     Am Campeon 3; 85579 Neubiberg, Germany
 
   For licensing information, see the file 'LICENSE' in the root folder of
   this software module.
@@ -38,6 +38,8 @@
 #     include "lint/ifxos_lint_std_defs.h"
 #  elif defined(LINUX)
 #     include "linux/ifxos_linux_std_defs.h"
+#  elif defined(SUN_OS)
+#     include "sun_os/ifxos_sun_os_std_defs.h"
 #  elif defined(VXWORKS)
 #     include "vxworks/ifxos_vxworks_std_defs.h"
 #  elif defined(ECOS)
@@ -56,6 +58,8 @@
 #     include "ifxos_lint_std_defs.h"
 #  elif defined(LINUX)
 #     include "ifxos_linux_std_defs.h"
+#  elif defined(SUN_OS)
+#     include "ifxos_sun_os_std_defs.h"
 #  elif defined(VXWORKS)
 #     include "ifxos_vxworks_std_defs.h"
 #  elif defined(ECOS)

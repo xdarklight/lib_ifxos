@@ -1,8 +1,8 @@
 /******************************************************************************
 
-                               Copyright  2007
-                            Infineon Technologies AG
-                     Am Campeon 1-12; 81726 Munich, Germany
+                              Copyright (c) 2009
+                            Lantiq Deutschland GmbH
+                     Am Campeon 3; 85579 Neubiberg, Germany
 
   For licensing information, see the file 'LICENSE' in the root folder of
   this software module.
@@ -25,12 +25,15 @@
 #include <ioLib.h>
 #include <selectLib.h>
 #include <errno.h>
+#if 0	/* fix it VxWorks 6.4 ? */
+#	include <base\e_vxTypesOld.h>
+#endif
+#include <string.h>
 
 #include "ifx_types.h"
 #include "ifxos_rt_if_check.h"
 #include "ifxos_socket.h"
 #include "ifxos_debug.h"
-
 
 /* ============================================================================
    IFX VxWorks adaptation - User Space, Socket
@@ -226,7 +229,8 @@ IFX_int_t IFXOS_SocketSelect(
    }
 
    /* call selct function itself */
-   ret = (IFX_int_t)select(maxSocFd, pSocFdRead, pSocFdWrite, pSocFdExcept,  pTime);
+   ret = (IFX_int_t)select(maxSocFd, pSocFdRead, pSocFdWrite, pSocFdExcept, 
+      pTime);
 
    return ret;
 }
@@ -240,7 +244,8 @@ IFX_int_t IFXOS_SocketSelect(
 \param
    socFd          specifies the socket. Value has to be greater or equal zero
 \param
-   pBuffer        specifies the pointer to a buffer where the data will be copied
+   pBuffer        specifies the pointer to a buffer where the data will be 
+                  copied
 \param
    bufSize_byte   specifies the size in byte of the buffer 'pBuffer'
 
@@ -256,7 +261,8 @@ IFX_int_t IFXOS_SocketRecv(
    int recvBytes = 0;
    IFXOS_RETURN_IF_POINTER_NULL(pBuffer, IFX_ERROR);
 
-   if ( (recvBytes = recv((int)socFd, (char*)pBuffer, (int)bufSize_byte, 0)) == ERROR)
+   if ( (recvBytes = recv((int)socFd, (char*)pBuffer, (int)bufSize_byte, 0)) == 
+      ERROR)
    {
       IFXOS_PRN_USR_ERR_NL( IFXOS, IFXOS_PRN_LEVEL_ERR,
          ("IFXOS ERROR - recv errno = %d" IFXOS_CRLF, errno));
@@ -277,7 +283,8 @@ IFX_int_t IFXOS_SocketRecv(
 \param
    socFd          specifies the socket. Value has to be greater or equal zero
 \param
-   pBuffer        specifies the pointer to a buffer where the data will be copied
+   pBuffer        specifies the pointer to a buffer where the data will be 
+                  copied
 \param
    bufSize_byte   specifies the size in byte of the buffer 'pBuffer'
 \param
@@ -314,12 +321,13 @@ IFX_int_t IFXOS_SocketRecvFrom(
 \param
    socFd          specifies the socket. Value has to be greater or equal zero
 \param
-   pBuffer        specifies the pointer to a buffer where the data will be copied
+   pBuffer        specifies the pointer to a buffer where the data will be 
+                  copied
 \param
    bufSize_byte   specifies the size in byte of the buffer 'pBuffer'
 
 \return
-   Returns the number of received bytes. Returns a negative value if an error
+   Returns the number of sent bytes. Returns a negative value if an error
    occured
 */ 
 IFX_int_t IFXOS_SocketSend(
@@ -330,7 +338,8 @@ IFX_int_t IFXOS_SocketSend(
    IFXOS_RETURN_IF_POINTER_NULL(pBuffer, IFX_ERROR);
    IFXOS_RETURN_IF_ARG_LE_ZERO(bufSize_byte, IFX_ERROR);
 
-   return (IFX_int_t)send((int)socFd, (const char*)pBuffer, (int)bufSize_byte, 0);
+   return (IFX_int_t)send((int)socFd, (const char*)pBuffer, (int)bufSize_byte, 
+      0);
 }
 
 /**
@@ -342,14 +351,15 @@ IFX_int_t IFXOS_SocketSend(
 \param
    socFd          specifies the socket. Value has to be greater or equal zero
 \param
-   pBuffer        specifies the pointer to a buffer where the data will be copied
+   pBuffer        specifies the pointer to a buffer where the data will be 
+                  copied
 \param
    bufSize_byte   specifies the size in byte of the buffer 'pBuffer'
 \param
    pSocAddr    specifies a pointer to the IFXOS_sockAddr_t structure
 
 \return
-   Returns the number of received bytes. Returns a negative value if an error
+   Returns the number of sent bytes. Returns a negative value if an error
    occured
 */ 
 IFX_int_t IFXOS_SocketSendTo(
@@ -359,12 +369,12 @@ IFX_int_t IFXOS_SocketSendTo(
                   IFXOS_sockAddr_t  *pSocAddr)
 {
    int ret;
-   
+ 
    IFXOS_RETURN_IF_POINTER_NULL(pBuffer, IFX_ERROR);
    IFXOS_RETURN_IF_ARG_LE_ZERO(bufSize_byte, IFX_ERROR);
 
-   ret = (IFX_int_t)sendto((int)socFd, (const char*)pBuffer, 
-      (int)bufSize_byte, 0, pSocAddr, sizeof(IFXOS_sockAddr_t));
+   ret = (IFX_int_t)sendto((int)socFd, pBuffer, (int)bufSize_byte, 0, 
+      (struct sockaddr*) pSocAddr, sizeof(IFXOS_sockAddr_t));
 
    return ret;
 }
@@ -408,8 +418,8 @@ IFX_int_t IFXOS_SocketBind(
 }
 
 /**
-   VxWorks - Indicates that the server is willing to accept connection requests from
-   clients for a TCP/IP socket.
+   VxWorks - Indicates that the server is willing to accept connection requests 
+   from clients for a TCP/IP socket.
 
 \par Implementation
    -  via "listen"
@@ -459,7 +469,8 @@ IFXOS_socket_t IFXOS_SocketAccept(
 
    IFX_int_t addrlen = sizeof (struct sockaddr);
 
-   return (IFXOS_socket_t)accept((int)socFd, (struct sockaddr *)pSocAddr, &addrlen);
+   return (IFXOS_socket_t)accept((int)socFd, (struct sockaddr *)pSocAddr, 
+      &addrlen);
 }
 
 /**
@@ -488,7 +499,8 @@ IFX_int_t IFXOS_SocketConnect(
    if ( (connect((int)socFd, (struct sockaddr *)pSocAddr, socAddrLen)) != OK)
    {
       IFXOS_PRN_USR_ERR_NL( IFXOS, IFXOS_PRN_LEVEL_ERR,
-         ("IFXOS ERROR - Socket Connect, cannot establish the connection" IFXOS_CRLF));
+         ("IFXOS ERROR - Socket Connect, cannot establish the connection" 
+            IFXOS_CRLF));
 
       return IFX_ERROR;
    }
@@ -497,10 +509,12 @@ IFX_int_t IFXOS_SocketConnect(
 }
 
 /**
-   VxWorks - This function converts a network address to dotted decimal notation.
+   VxWorks - This function converts a network address to dotted decimal 
+   notation.
 
 \par Implementation
-   -  convert the given socket address via "inet_ntoa" and copy it to the buffer.
+   -  convert the given socket address via "inet_ntoa" and copy it to the 
+   buffer.
 
 \param
    pSocAddr    specifies a pointer to the DSL internal address structure
@@ -524,7 +538,8 @@ IFX_void_t IFXOS_SocketNtoa(
 
 
 /**
-   VxWorks - This function converts a dotted decimal address to a network address.
+   VxWorks - This function converts a dotted decimal address to a network 
+   address.
 
 \par Implementation
    -  convert the given ASCII address via "inet_aton".

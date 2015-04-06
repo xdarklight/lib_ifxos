@@ -2,9 +2,9 @@
 #define _IFXOS_MEM_ALLOC_H
 /******************************************************************************
 
-                               Copyright  2007
-                            Infineon Technologies AG
-                     Am Campeon 1-12; 81726 Munich, Germany
+                              Copyright (c) 2009
+                            Lantiq Deutschland GmbH
+                     Am Campeon 3; 85579 Neubiberg, Germany
 
   For licensing information, see the file 'LICENSE' in the root folder of
   this software module.
@@ -126,8 +126,7 @@
    pointer to the allocated memory block.
 
 */
-IFX_void_t *IFXOS_BlockAlloc(
-               IFX_size_t memSize_byte);
+IFX_void_t *IFXOS_BlockAlloc(IFX_size_t memSize_byte);
 
 /**
    Free the given memory block.

@@ -2,9 +2,9 @@
 #define _IFXOS_COMMON_H
 /******************************************************************************
 
-                               Copyright  2007
-                            Infineon Technologies AG
-                     Am Campeon 1-12; 81726 Munich, Germany
+                              Copyright (c) 2009
+                            Lantiq Deutschland GmbH
+                     Am Campeon 3; 85579 Neubiberg, Germany
 
   For licensing information, see the file 'LICENSE' in the root folder of
   this software module.
@@ -12,12 +12,12 @@
 ******************************************************************************/
 
 /** \file
-   This file contains commen OS independant definitions for the IFX OS.
+   This file contains common OS independent definitions for the IFX OS.
 */
 
 /** \defgroup IFXOS_INTERFACE IFXOS Interface Layer
 
-   This Group contains the definitions and functions of the Infineon OS Layer.
+   This Group contains the definitions and functions of the Infineon / Lantiq OS Layer.
 
    Therefore the IFX OS defines and provides wrapper functions to hide the
    OS specifc implementations.
@@ -165,6 +165,17 @@
    IFX OS adaptation - Misc
    ========================================================================= */
 
+/**
+   The function call will wait forever until the event occur.
+*/
+#define IFXOS_WAIT_FOREVER    0xFFFFFFFF
+
+/**
+   Don't wait at all. The function will check the condition and will return 
+   immediately.
+*/
+#define IFXOS_NO_WAIT         0x00000000     
+      
 /** @} */
 
 #ifdef __cplusplus

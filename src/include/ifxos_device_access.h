@@ -2,9 +2,9 @@
 #define _IFXOS_DEVICE_ACCESS_H
 /******************************************************************************
 
-                               Copyright  2007
-                            Infineon Technologies AG
-                     Am Campeon 1-12; 81726 Munich, Germany
+                              Copyright (c) 2009
+                            Lantiq Deutschland GmbH
+                     Am Campeon 3; 85579 Neubiberg, Germany
 
   For licensing information, see the file 'LICENSE' in the root folder of
   this software module.
@@ -107,6 +107,19 @@ IFX_int32_t IFXOS_DeviceOpen(
                const IFX_char_t *pDevName);
 
 /**
+   Open a device for reading only.
+
+\param
+   pDevName    device name.
+
+\return
+   - If success, device descriptor used for further device access, else
+   - IFX_ERROR in case of error.
+*/
+IFX_int32_t IFXOS_DeviceOpenRead(
+               const IFX_char_t *pDevName);
+
+/**
    Close a device
 
 \param
@@ -177,7 +190,8 @@ IFX_int32_t IFXOS_DeviceControl(
                const IFX_uint32_t   devCmd, 
                IFX_ulong_t          param);
 
-#endif      /* #if ( defined(IFXOS_HAVE_DEVICE_ACCESS) && (IFXOS_HAVE_DEVICE_ACCESS == 1) ) */
+#endif /* #if ( defined(IFXOS_HAVE_DEVICE_ACCESS) && (IFXOS_HAVE_DEVICE_ACCESS 
+== 1) ) */
 
 #if ( defined(IFXOS_HAVE_DEVICE_ACCESS_SELECT) && (IFXOS_HAVE_DEVICE_ACCESS_SELECT == 1) )
 
@@ -243,7 +257,8 @@ IFX_int_t IFXOS_DevFdIsSet(
 IFX_void_t IFXOS_DevFdZero(
                IFXOS_devFd_set_t *pDevFdSet);
 
-#endif      /* #if ( defined(IFXOS_HAVE_DEVICE_ACCESS_SELECT) && (IFXOS_HAVE_DEVICE_ACCESS_SELECT == 1) ) */
+#endif /* #if ( defined(IFXOS_HAVE_DEVICE_ACCESS_SELECT) && 
+(IFXOS_HAVE_DEVICE_ACCESS_SELECT == 1) ) */
 
 
 /** @} */

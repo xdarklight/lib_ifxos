@@ -1,8 +1,8 @@
 /******************************************************************************
 
-                               Copyright  2007
-                            Infineon Technologies AG
-                     Am Campeon 1-12; 81726 Munich, Germany
+                              Copyright (c) 2009
+                            Lantiq Deutschland GmbH
+                     Am Campeon 3; 85579 Neubiberg, Germany
 
   For licensing information, see the file 'LICENSE' in the root folder of
   this software module.
@@ -70,10 +70,10 @@ IFX_int_t IFXOS_EventInit(
       if (IFXOS_EVENT_INIT_VALID(pEventId) == IFX_FALSE)
       {
          xsm_create (name, 0, 0, &(pEventId->object));
-         pEventId->bValid = IFX_TRUE;
+   pEventId->bValid = IFX_TRUE;
 
-         return IFX_SUCCESS;
-      }
+   return IFX_SUCCESS;
+}
    }
 
    return IFX_ERROR;
@@ -96,7 +96,7 @@ IFX_int_t IFXOS_EventDelete(
                IFXOS_event_t  *pEventId)
 {
    /* Does nothing */
-    return IFX_SUCCESS;
+   return IFX_SUCCESS;
 }
 
 /**
@@ -173,14 +173,14 @@ IFX_int_t IFXOS_EventWait(IFXOS_event_t *pEventId,
          {
             if (pRetCode)
                *pRetCode = 1;
-         }
-         else
-         {
+   }
+   else
+   {
             if (pRetCode)
                *pRetCode = 0;
             return IFX_SUCCESS;
-         }
-      }
+       }
+   }
    }
    return IFX_ERROR;
 }

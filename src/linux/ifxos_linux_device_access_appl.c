@@ -1,15 +1,14 @@
 /******************************************************************************
 
-                               Copyright  2007
-                            Infineon Technologies AG
-                     Am Campeon 1-12; 81726 Munich, Germany
+                              Copyright (c) 2009
+                            Lantiq Deutschland GmbH
+                     Am Campeon 3; 85579 Neubiberg, Germany
 
   For licensing information, see the file 'LICENSE' in the root folder of
   this software module.
 
 ******************************************************************************/
 
-#if defined(LINUX) && !defined(IFXOS_USE_DEV_IO)
 
 /** \file
    This file contains the IFXOS Layer implementation for LINUX Application 
@@ -20,6 +19,9 @@
    IFX Linux adaptation - Global Includes
    ========================================================================= */
 #include <stdio.h>
+
+#if defined(LINUX) && !defined(IFXOS_USE_DEV_IO)
+
 #include <sys/time.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -32,6 +34,7 @@
 #include "ifxos_rt_if_check.h"
 #include "ifxos_time.h"
 #include "ifxos_device_access.h"
+#include "ifxos_common.h"
 
 /* ============================================================================
    IFX Linux adaptation - Application Space, Device Access
@@ -181,20 +184,36 @@ IFX_int32_t IFXOS_DeviceSelect(
    IFXOS_devFd_set_t tmp;
    struct timeval tv;
 
-   tv.tv_sec = timeout_ms / 1000;
-   tv.tv_usec = (timeout_ms % 1000) * 1000; 
+   switch (timeout_ms)
+   {
+      case IFXOS_NO_WAIT:
+         tv.tv_sec = 0;
+         tv.tv_usec = 0;
+         break;
+      case IFXOS_WAIT_FOREVER:
+         break;
+      default:
+         tv.tv_sec = timeout_ms / 1000;
+         tv.tv_usec = (timeout_ms % 1000) * 1000; 
+   }
 
    if(read_fd_in)
    {
       if(read_fd_out)
       {
          memcpy(read_fd_out, read_fd_in, sizeof(IFXOS_devFd_set_t));
-         return select(max_fd, read_fd_out, NULL, NULL, &tv);
+         if (timeout_ms != IFXOS_WAIT_FOREVER)
+            return select(max_fd, read_fd_out, NULL, NULL, &tv);
+         else
+            return select(max_fd, read_fd_out, NULL, NULL, NULL);
       }
       else
       {
          memcpy(&tmp, read_fd_in, sizeof(IFXOS_devFd_set_t));
-         return select(max_fd, &tmp, NULL, NULL, &tv);
+         if (timeout_ms != IFXOS_WAIT_FOREVER)
+            return select(max_fd, &tmp, NULL, NULL, &tv);
+         else
+            return select(max_fd, &tmp, NULL, NULL, NULL);
       }
    }
    else

@@ -1,8 +1,8 @@
 /******************************************************************************
 
-                               Copyright  2007
-                            Infineon Technologies AG
-                     Am Campeon 1-12; 81726 Munich, Germany
+                              Copyright (c) 2009
+                            Lantiq Deutschland GmbH
+                     Am Campeon 3; 85579 Neubiberg, Germany
 
   For licensing information, see the file 'LICENSE' in the root folder of
   this software module.
@@ -20,9 +20,16 @@
    IFX Win32 adaptation - Global Includes
    ========================================================================= */
 #include <stdio.h>
+#include <stdarg.h>
 
 #include "ifx_types.h"
 #include "ifxos_print.h"
+
+#ifdef IFXOS_DEBUG
+#define IFXOS_STATIC
+#else
+#define IFXOS_STATIC   static
+#endif
 
 /* ============================================================================
    IFX Win32 adaptation - User Space, Print Handling

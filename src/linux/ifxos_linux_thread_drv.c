@@ -1,8 +1,8 @@
 /******************************************************************************
 
-                               Copyright  2007
-                            Infineon Technologies AG
-                     Am Campeon 1-12; 81726 Munich, Germany
+                              Copyright (c) 2009
+                            Lantiq Deutschland GmbH
+                     Am Campeon 3; 85579 Neubiberg, Germany
 
   For licensing information, see the file 'LICENSE' in the root folder of
   this software module.
@@ -115,7 +115,7 @@ IFXOS_STATIC IFX_int32_t IFXOS_KernelThreadStartup(
    /* terminate the name if necessary */
    pThrCntrl->thrParams.pName[16 -1] = 0;
 
-   IFXOS_PRN_USR_DBG_NL( IFXOS, IFXOS_PRN_LEVEL_HIGH,
+   IFXOS_PRN_USR_DBG_NL( IFXOS, IFXOS_PRN_LEVEL_NORMAL,
       ("ENTER - Kernel Thread Startup <%s>" IFXOS_CRLF,
         pThrCntrl->thrParams.pName));
 
@@ -155,7 +155,7 @@ IFXOS_STATIC IFX_int32_t IFXOS_KernelThreadStartup(
 
    complete_and_exit(&pThrCntrl->thrCompletion, (long)retVal);
 
-   IFXOS_PRN_USR_DBG_NL( IFXOS, IFXOS_PRN_LEVEL_HIGH,
+   IFXOS_PRN_USR_DBG_NL( IFXOS, IFXOS_PRN_LEVEL_NORMAL,
       ("EXIT - Kernel Thread Startup <%s>" IFXOS_CRLF,
         pThrCntrl->thrParams.pName));
 
@@ -199,8 +199,8 @@ IFX_int32_t IFXOS_ThreadInit(
                IFX_ulong_t    nArg1,
                IFX_ulong_t    nArg2)
 {
-   IFXOS_RETURN_IF_POINTER_NULL(pThreadFunction, IFX_ERROR);
-   IFXOS_RETURN_IF_POINTER_NULL(pName, IFX_ERROR);
+   if(pThreadFunction == IFX_NULL) return IFX_ERROR;
+   if(pName == IFX_NULL) return IFX_ERROR;
 
    if(pThrCntrl)
    {

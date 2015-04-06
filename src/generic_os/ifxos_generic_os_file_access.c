@@ -1,8 +1,8 @@
 /******************************************************************************
 
-                               Copyright  2007
-                            Infineon Technologies AG
-                     Am Campeon 1-12; 81726 Munich, Germany
+                              Copyright (c) 2009
+                            Lantiq Deutschland GmbH
+                     Am Campeon 3; 85579 Neubiberg, Germany
 
   For licensing information, see the file 'LICENSE' in the root folder of
   this software module.
@@ -277,6 +277,10 @@ IFX_int_t IFXOS_Stat(
   The required data buffer is allocated and it is in the responsibility of the 
   user to free the buffer in a later step.
 
+\remarks
+   Allocate file size + 1 to terminate the buffer with '\0'.
+   This will allow other functions to parse the buffer without the size info.
+
 \param
    pName          - Points to the file name.
 \param
@@ -299,6 +303,8 @@ IFX_return_t IFXOS_FileLoad (
       Fill with your customer OS implementation like:
       - get the file statistics
       - allocate memory for load the file
+        --> Allocate file size + 1 - to add null termination
+        --> terminate the file buffer
       - open and load the file
       - close the file
       - set the return values

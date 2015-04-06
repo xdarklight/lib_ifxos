@@ -2,9 +2,9 @@
 #define _IFXOS_EVENT_H
 /******************************************************************************
 
-                               Copyright  2007
-                            Infineon Technologies AG
-                     Am Campeon 1-12; 81726 Munich, Germany
+                              Copyright (c) 2009
+                            Lantiq Deutschland GmbH
+                     Am Campeon 3; 85579 Neubiberg, Germany
 
   For licensing information, see the file 'LICENSE' in the root folder of
   this software module.
@@ -169,16 +169,6 @@ IFX_int_t IFXOS_EventDelete(
 IFX_int_t IFXOS_EventWakeUp(
                IFXOS_event_t  *pEventId);
                
-/**
-   The function call will wait forever until the event occur.
-*/
-#define IFXOS_WAIT_FOREVER    0xFFFFFFFF
-
-/**
-   Don't wait at all. The function will check the condition and will return immediately.
-*/
-#define IFXOS_NO_WAIT         0x00000000
-
 /**
    Wait for the occurance of an "event" with timeout.
 

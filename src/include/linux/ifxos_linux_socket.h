@@ -2,9 +2,9 @@
 #define _IFXOS_LINUX_SOCKET_H
 /******************************************************************************
 
-                               Copyright  2007
-                            Infineon Technologies AG
-                     Am Campeon 1-12; 81726 Munich, Germany
+                              Copyright (c) 2009
+                            Lantiq Deutschland GmbH
+                     Am Campeon 3; 85579 Neubiberg, Germany
 
   For licensing information, see the file 'LICENSE' in the root folder of
   this software module.
@@ -32,11 +32,15 @@
 /* ============================================================================
    IFX LINUX adaptation - Includes
    ========================================================================= */
+#ifdef __KERNEL__
+#include <linux/in.h>
+#else      
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/select.h>
 #include <netinet/in.h>
-#include <arpa/inet.h> 
+#include <arpa/inet.h>
+#endif /* __KERNEL__ */
 
 #include "ifx_types.h"
 

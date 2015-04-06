@@ -1,8 +1,8 @@
 /******************************************************************************
 
-                               Copyright  2007
-                            Infineon Technologies AG
-                     Am Campeon 1-12; 81726 Munich, Germany
+                              Copyright (c) 2009
+                            Lantiq Deutschland GmbH
+                     Am Campeon 3; 85579 Neubiberg, Germany
 
   For licensing information, see the file 'LICENSE' in the root folder of
   this software module.
@@ -150,7 +150,15 @@ IFX_int32_t GetKeyString(
          {
             /* we are in the requested section */
             pKey = strtok_r(pLine, "=", &pTok);
+            if(pKey == IFX_NULL)
+            {
+               continue;
+            }
             pVal = strtok_r(IFX_NULL, "\r", &pTok);
+            if(pVal == IFX_NULL)
+            {
+               continue;
+            }
             /* is this the requested key? */
             if (strcmp(pKeyName, pKey) == 0)
             {
@@ -172,9 +180,13 @@ IFX_int32_t GetKeyString(
    /* prepare the default string */
    if (ret == 0)
    {
-      strncpy(pRetString, pDefault, nSize-1);
-      /* make sure, we have an end marker */
-      *(pRetString+nSize-1) = '\0';
+      *pRetString = '\0';
+      if (pDefault != IFX_NULL)
+      {
+         strncpy(pRetString, pDefault, nSize-1);
+			/* make sure, we have an end marker */
+			*(pRetString+nSize-1) = '\0';
+      }
       ret = (IFX_int32_t)strlen(pRetString);
    }
 
@@ -299,6 +311,9 @@ IFX_int32_t GetSection(
 \return
    number of caracters from pData to end of line
    (to skip this line in buffer of calling function)
+
+\remark
+   The pData buffer should contain a null terminated file.
 */
 IFX_int32_t GetNextLine(
    IFX_char_t* pData,      /**< start of data to scan */
@@ -329,13 +344,21 @@ IFX_int32_t GetNextLine(
    {
       *pRetLine = *pIn;
       pIn++;
-      ret++;
 
       /* break on line or string end */
-      if ((*pRetLine == '\0') || (*pRetLine == '\r') || (*pRetLine == '\n'))
+      if ((*pRetLine == '\r') || (*pRetLine == '\n'))
+      {
+         ret++;
+         break;
+      }
+
+      /* break on file end */
+      if (*pRetLine == '\0')
       {
          break;
       }
+
+      ret++;
       i++;
       pRetLine++;
    }

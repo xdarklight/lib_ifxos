@@ -2,9 +2,9 @@
 #define _IFXOS_LINUX_EVENT_H
 /******************************************************************************
 
-                               Copyright  2007
-                            Infineon Technologies AG
-                     Am Campeon 1-12; 81726 Munich, Germany
+                              Copyright (c) 2009
+                            Lantiq Deutschland GmbH
+                     Am Campeon 3; 85579 Neubiberg, Germany
 
   For licensing information, see the file 'LICENSE' in the root folder of
   this software module.
@@ -74,8 +74,8 @@
    IFX LINUX adaptation - Includes
    ========================================================================= */
 #ifdef __KERNEL__
-#include <linux/kernel.h>
-#include <linux/poll.h> /* wait_queue_head_t */
+#  include <linux/kernel.h>
+#  include <linux/poll.h> /* wait_queue_head_t */
 #else
 #endif
 
@@ -110,7 +110,11 @@ typedef struct
    /** event object */
    wait_queue_head_t object;
    /** valid flag */
-   IFX_boolean_t bValid;
+   IFX_boolean_t  bValid;
+
+   /** wakeup condition flag (used for Kernel Version 2.6) */
+   int            bConditionFlag;
+
 } IFXOS_event_t; 
 
 /** @} */

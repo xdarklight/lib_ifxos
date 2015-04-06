@@ -1,8 +1,8 @@
 /******************************************************************************
 
-                               Copyright  2007
-                            Infineon Technologies AG
-                     Am Campeon 1-12; 81726 Munich, Germany
+                              Copyright (c) 2009
+                            Lantiq Deutschland GmbH
+                     Am Campeon 3; 85579 Neubiberg, Germany
 
   For licensing information, see the file 'LICENSE' in the root folder of
   this software module.
@@ -199,7 +199,7 @@ IFX_int_t GetOptExt_ParseArgString(
    {
       while(argStrLen > 0)
       {
-         if (GET_OPT_EXT_IsSpace(*pArgStart)) 
+         if (GET_OPT_EXT_IsSpace((int)*pArgStart))
          {
             pArgStart++;
             argStrLen--;
@@ -253,7 +253,7 @@ IFX_int_t GetOptExt_ParseArgString(
 
          while(argStrLen > 0)
          {
-            if (!GET_OPT_EXT_IsSpace(*pArgStart)) 
+            if (!GET_OPT_EXT_IsSpace((int)*pArgStart))
             {
                pArgStart++;
                argStrLen--;

@@ -1,8 +1,8 @@
 /******************************************************************************
 
-                               Copyright  2007
-                            Infineon Technologies AG
-                     Am Campeon 1-12; 81726 Munich, Germany
+                              Copyright (c) 2009
+                            Lantiq Deutschland GmbH
+                     Am Campeon 3; 85579 Neubiberg, Germany
 
   For licensing information, see the file 'LICENSE' in the root folder of
   this software module.
@@ -27,9 +27,11 @@
    ========================================================================= */
 
 #include <linux/kernel.h>
+#include <linux/version.h>
 #ifdef MODULE
    #include <linux/module.h>
 #endif
+
 #include <linux/sched.h>
 #include <linux/wait.h>
 
@@ -66,7 +68,8 @@ IFX_int_t IFXOS_EventInit(
       if (IFXOS_EVENT_INIT_VALID(pEventId) == IFX_FALSE)
       {
          init_waitqueue_head (&pEventId->object);
-         pEventId->bValid = IFX_TRUE;
+         pEventId->bValid         = IFX_TRUE;
+         pEventId->bConditionFlag = 0;
 
          return IFX_SUCCESS;
       }
@@ -96,7 +99,8 @@ IFX_int_t IFXOS_EventDelete(
       if (IFXOS_EVENT_INIT_VALID(pEventId) == IFX_TRUE)
       {
          /*remove_wait_queue(&pEventId->object); fixme */
-         pEventId->bValid = IFX_FALSE;
+         pEventId->bValid         = IFX_FALSE;
+         pEventId->bConditionFlag = 0;
          
          return IFX_SUCCESS;
       }
@@ -127,6 +131,7 @@ IFX_int_t IFXOS_EventWakeUp(
    {
       if (IFXOS_EVENT_INIT_VALID(pEventId) == IFX_TRUE)
       {
+         pEventId->bConditionFlag = 1;
          wake_up_interruptible(&pEventId->object);
 
          return IFX_SUCCESS;
@@ -166,14 +171,40 @@ IFX_int_t IFXOS_EventWait(
    {
       if (IFXOS_EVENT_INIT_VALID(pEventId) == IFX_TRUE)
       {
-         interruptible_sleep_on_timeout(&pEventId->object, (HZ * (waitTime_ms)) / 1000);
+#  if (LINUX_VERSION_CODE < KERNEL_VERSION(2,6,0))
+         if (interruptible_sleep_on_timeout(&pEventId->object, (HZ * (waitTime_ms)) / 1000) == 0)
+         {
+            if(pRetCode) 
+               *pRetCode = 1;
 
+            pEventId->bConditionFlag = 0;
+            return IFX_ERROR;
+         }
+
+         pEventId->bConditionFlag = 0;
          return IFX_SUCCESS;
+#  else
+         if ( wait_event_interruptible_timeout(
+                     pEventId->object, 
+                     (pEventId->bConditionFlag == 1), 
+                     ((HZ * (waitTime_ms)) / 1000)) == 0 )
+         {
+            if(pRetCode) 
+               *pRetCode = 1;
+
+            pEventId->bConditionFlag = 0;
+            return IFX_ERROR;
+         }
+
+         pEventId->bConditionFlag = 0;
+         return IFX_SUCCESS;
+#  endif
       }
    }
 
    return IFX_ERROR;
 }
+
 
 #endif      /* #if ( defined(IFXOS_HAVE_EVENT) && (IFXOS_HAVE_EVENT == 1) ) */
 

@@ -1,8 +1,8 @@
 /******************************************************************************
 
-                               Copyright  2007
-                            Infineon Technologies AG
-                     Am Campeon 1-12; 81726 Munich, Germany
+                              Copyright (c) 2009
+                            Lantiq Deutschland GmbH
+                     Am Campeon 3; 85579 Neubiberg, Germany
 
   For licensing information, see the file 'LICENSE' in the root folder of
   this software module.
@@ -63,13 +63,14 @@ IFX_void_t *IFXOS_CpyFromUser(
                const IFX_void_t  *pFrom, 
                IFX_uint32_t      size_byte)
 {
+   IFX_uint32_t remainBytes;
+   
    IFXOS_RETURN_IF_POINTER_NULL(pTo, IFX_NULL);
    IFXOS_RETURN_IF_POINTER_NULL(pFrom, IFX_NULL);
    IFXOS_RETURN_IF_ARG_LE_ZERO(size_byte, IFX_NULL);
-
-   IFX_uint32_t remainBytes = (IFX_uint32_t)copy_from_user( (void *)pTo, 
-                                                            (const void *)pFrom,
-                                                            (unsigned long)size_byte);
+ 
+   remainBytes = (IFX_uint32_t)copy_from_user( (void *)pTo, (const void *)pFrom,
+      (unsigned long)size_byte);
 
    return (remainBytes) ? IFX_NULL : pTo;
 }
@@ -95,13 +96,14 @@ IFX_void_t *IFXOS_CpyToUser(
                const IFX_void_t *pFrom, 
                IFX_uint32_t size_byte)
 {
+   IFX_uint32_t remainBytes;
+   
    IFXOS_RETURN_IF_POINTER_NULL(pTo, IFX_NULL);
    IFXOS_RETURN_IF_POINTER_NULL(pFrom, IFX_NULL);
    IFXOS_RETURN_IF_ARG_LE_ZERO(size_byte, IFX_NULL);
 
-   IFX_uint32_t remainBytes = (IFX_uint32_t)copy_to_user( (void *)pTo, 
-                                                          (const void *)pFrom,
-                                                          (unsigned long)size_byte);
+   remainBytes = (IFX_uint32_t)copy_to_user( (void *)pTo, (const void *)pFrom,
+      (unsigned long)size_byte);
 
    return (remainBytes) ? IFX_NULL : pTo;
 }

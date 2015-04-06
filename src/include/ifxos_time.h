@@ -2,9 +2,9 @@
 #define _IFXOS_TIME_H
 /******************************************************************************
 
-                               Copyright  2007
-                            Infineon Technologies AG
-                     Am Campeon 1-12; 81726 Munich, Germany
+                              Copyright (c) 2009
+                            Lantiq Deutschland GmbH
+                     Am Campeon 3; 85579 Neubiberg, Germany
 
   For licensing information, see the file 'LICENSE' in the root folder of
   this software module.
@@ -46,6 +46,8 @@
 #     include "win32/ifxos_win32_time.h"
 #  elif defined(RTEMS)
 #     include "rtems/ifxos_rtems_time.h"
+#  elif defined(SUN_OS)
+#     include "sun_os/ifxos_sun_os_time.h"
 #  elif defined(GENERIC_OS)
 #     include "generic_os/ifxos_generic_os_time.h"
 #  elif defined(XAPI)
@@ -66,6 +68,8 @@
 #     include "ifxos_win32_time.h"
 #  elif defined(RTEMS)
 #     include "ifxos_rtems_time.h"
+#  elif defined(SUN_OS)
+#     include "ifxos_sun_os_time.h"
 #  elif defined(GENERIC_OS)
 #     include "ifxos_generic_os_time.h"
 #  elif defined(XAPI)

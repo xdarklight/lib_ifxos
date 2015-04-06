@@ -1,5 +1,48 @@
 NEXT VERSION
 
+FIX:
+-
+ADD:
+-
+CHANGE(S):
+-
+
+V1.5.12 - 2010-01-13
+FIX:
+- LINUX: the function "interruptible_sleep_on_timeout" is strongly depricated with Kernel 2.6.
+  Replace it with "wait_event_interruptible_timeout" (see ifxos_linux_event_drv.c).
+- GetOpt Extention - fix incorrect cast for isspace macro.
+- IFX File Access: FileLoad - allocate filesize + 1 to add a '\0' termination
+  to the end of the file buffer. This allows other functions to parse the
+  buffer until the end termination (avoids out of bound read while file scan,
+  see ifx_ini_access.c::GetNextLine).
+- ifx_in_access.c::GetNextLine: break on '\0' termination.
+ADD:
+-
+CHANGE(S):
+- Update Lantiq License info.
+- separate options for gcc and cc compiler (default will be gcc).
+  For compile with cc compiler use the new configure option:
+  --enable-have-cc
+- Architecture name powerpc is no longer replaced by ppc as newer linux kernel
+  support the powerpc architecture name
+- changed informational print outs to normal log level
+- Linux: driver load now prints only one line of version and copyright
+  
+V1.5.11 - 2009-07-30
+FIX:
+- VxWorks: remove VxWorks 6.4 specific includes.
+- fix ressource leak in CFG_LoadFile
+- fix possible zero pointer access in GetKeyString, IFXOS_ThreadInit
+- fix possible ressource leak in IFXOS_ThreadInit (Linux)
+- fix missing standard includes for SunOs
+ADD:
+- ifx_types.h 64bit extensions, added #HAVE_xxx_t defines, cosmetics
+- add check to CFG_SetBoardConfigFromArray
+- SunOS: add "getopt extended" and ini-file access to the build process
+CHANGE(S):
+- make install now strips the driver
+
 V1.5.10 - 2009-03-25
 FIX:
 - ifxos_linux_lock.h: add kernel version check before including of semaphore.h
@@ -32,7 +75,7 @@ ADD:
       * ifxos_sun_os_file_access.h\
       * ifxos_sun_os_print_io.h\
       * ifxos_sun_os_print.h\
-      * ifxos_sun_os_std_defs.h 
+      * ifxos_sun_os_std_defs.h
 
 V1.5.6 - 2008-12-12
 ADD:

@@ -2,9 +2,9 @@
 #define _IFXOS_RTEMS_DEVICE_ACCESS_H
 /******************************************************************************
 
-                               Copyright  2007
-                            Infineon Technologies AG
-                     Am Campeon 1-12; 81726 Munich, Germany
+                              Copyright (c) 2009
+                            Lantiq Deutschland GmbH
+                     Am Campeon 3; 85579 Neubiberg, Germany
 
   For licensing information, see the file 'LICENSE' in the root folder of
   this software module.
@@ -110,11 +110,11 @@ typedef IFXOS_customerOS_DevFd_set_t       IFXOS_devFd_set_t;
 
 
 #  ifdef _MSC_VER
-#     pragma message( "device access for customer OS not supported" )
+#  pragma message("device access for customer OS not supported")
 #  endif
 #  if defined (__GNUC__) || defined (__GNUG__)
-#     warning "device access for customer OS not supported"
-#  endif
+#  warning "device access for customer OS not supported"
+#endif
 
 #endif      /* #if (defined(IFXOS_USE_DEV_IO) && (IFXOS_USE_DEV_IO == 1)) */
 

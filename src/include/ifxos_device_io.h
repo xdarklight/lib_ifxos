@@ -2,9 +2,9 @@
 #define DEV_IO_H
 /******************************************************************************
 
-                               Copyright  2007
-                            Infineon Technologies AG
-                     Am Campeon 1-12; 81726 Munich, Germany
+                              Copyright (c) 2009
+                            Lantiq Deutschland GmbH
+                     Am Campeon 3; 85579 Neubiberg, Germany
 
   For licensing information, see the file 'LICENSE' in the root folder of
   this software module.
@@ -35,7 +35,7 @@ extern "C" {
 
 /** Maximum number of drivers supported by LIB_IO extension. */
 #ifndef DEVIO_MAXDRIVERS
-#define DEVIO_MAXDRIVERS       (4)
+#define DEVIO_MAXDRIVERS       (6)
 #endif
 
 /** Maximum number of devices supported by LIB_IO extension. */

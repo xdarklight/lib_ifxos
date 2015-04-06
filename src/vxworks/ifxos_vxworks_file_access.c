@@ -1,8 +1,8 @@
 /******************************************************************************
 
-                               Copyright  2007
-                            Infineon Technologies AG
-                     Am Campeon 1-12; 81726 Munich, Germany
+                              Copyright (c) 2009
+                            Lantiq Deutschland GmbH
+                     Am Campeon 3; 85579 Neubiberg, Germany
 
   For licensing information, see the file 'LICENSE' in the root folder of
   this software module.
@@ -93,15 +93,10 @@ IFXOS_File_t *IFXOS_FOpen(
    For Success - IFX_SUCCESS
    No Success  - IFX_ERROR
 */
-IFX_int_t IFXOS_FClose(
-                  IFXOS_File_t *pFileFd)
+IFX_int_t IFXOS_FClose(IFXOS_File_t *pFileFd)
 {
-   IFXOS_RETURN_IF_POINTER_NULL(pName, IFX_ERROR);
-
-   if(pFileFd != 0)
-      return fclose(pFileFd);
-
-   return -1;
+   IFXOS_RETURN_IF_POINTER_NULL(pFileFd, IFX_ERROR);
+   return fclose(pFileFd);
 }
 
 
@@ -242,6 +237,10 @@ IFX_int_t IFXOS_Stat(
   The required data buffer is allocated and it is in the responsibility of the 
   user to free the buffer in a later step.
 
+\remarks
+   Allocate file size + 1 to terminate the buffer with '\0'.
+   This will allow other functions to parse the buffer without the size info.
+
 \param
    pName          - Points to the file name.
 \param
@@ -256,7 +255,7 @@ IFX_int_t IFXOS_Stat(
 IFX_return_t IFXOS_FileLoad (
                   IFX_char_t const  *pName, 
                   IFX_uint8_t       **ppDataBuf, 
-                  IFX_size_t      *pBufSize_byte)
+                  IFX_size_t        *pBufSize_byte)
 {
 #if (IFXOS_HAVE_FILESYSTEM == 1)
    IFXOS_File_t   *fd = IFX_NULL;
@@ -308,7 +307,8 @@ IFX_return_t IFXOS_FileLoad (
       return IFX_ERROR;
    }
 
-   pDataBuf = (IFX_uint8_t*)IFXOS_MemAlloc(size);
+   /* size + 1 - to add null termination */
+   pDataBuf = (IFX_uint8_t*)IFXOS_MemAlloc(size + 1);
    if (pDataBuf == IFX_NULL)
    {
       IFXOS_PRN_USR_ERR_NL( IFXOS, IFXOS_PRN_LEVEL_ERR,
@@ -333,6 +333,7 @@ IFX_return_t IFXOS_FileLoad (
 
    IFXOS_FClose(fd);
 
+   pDataBuf[size] = '\0';
    *pBufSize_byte = (IFX_uint32_t)size;
    *ppDataBuf     = pDataBuf;
 
@@ -532,12 +533,8 @@ IFXOS_File_t *IFXOS_FMemOpen (
 IFX_int_t IFXOS_FMemClose(
                   IFXOS_File_t *pFileFd)
 {
-   IFXOS_RETURN_IF_POINTER_NULL(pName, IFX_ERROR);
-
-   if(pFileFd != 0)
-      return fclose(pFileFd);
-
-   return -1;
+   IFXOS_RETURN_IF_POINTER_NULL(pFileFd, IFX_ERROR);
+   return fclose(pFileFd);
 }
 
 #endif

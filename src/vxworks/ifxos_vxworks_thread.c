@@ -1,8 +1,8 @@
 /******************************************************************************
 
-                               Copyright  2007
-                            Infineon Technologies AG
-                     Am Campeon 1-12; 81726 Munich, Germany
+                              Copyright (c) 2009
+                            Lantiq Deutschland GmbH
+                     Am Campeon 3; 85579 Neubiberg, Germany
 
   For licensing information, see the file 'LICENSE' in the root folder of
   this software module.
@@ -118,7 +118,7 @@ IFXOS_STATIC IFX_int32_t IFXOS_ThreadStartup(
 
 \return
    - IFX_SUCCESS thread was successful started.
-   - IFX_ERROR thread was not deleted
+   - IFX_ERROR thread was not started.
 */
 IFX_int32_t IFXOS_ThreadInit(
                IFXOS_ThreadCtrl_t *pThrCntrl,
@@ -129,8 +129,8 @@ IFX_int32_t IFXOS_ThreadInit(
                IFX_ulong_t    nArg1,
                IFX_ulong_t    nArg2)
 {
-   IFXOS_RETURN_IF_POINTER_NULL(pThreadFunction, IFX_ERROR);
-   IFXOS_RETURN_IF_POINTER_NULL(pName, IFX_ERROR);
+   if(pThreadFunction == IFX_NULL) return IFX_ERROR;
+   if(pName == IFX_NULL) return IFX_ERROR;
 
    if(pThrCntrl)
    {
@@ -144,8 +144,10 @@ IFX_int32_t IFXOS_ThreadInit(
          pThrCntrl->thrParams.nArg2 = nArg2;
          pThrCntrl->thrParams.bShutDown = IFX_FALSE;
 
-         pThrCntrl->thrParams.pSysObject = (IFX_void_t*)IFXOS_SYS_OBJECT_GET(IFXOS_SYS_OBJECT_THREAD);
-         IFXOS_SYS_THREAD_PARAMS_SET(pThrCntrl->thrParams.pSysObject, pThrCntrl);
+         pThrCntrl->thrParams.pSysObject = 
+            (IFX_void_t*)IFXOS_SYS_OBJECT_GET(IFXOS_SYS_OBJECT_THREAD);
+         IFXOS_SYS_THREAD_PARAMS_SET(pThrCntrl->thrParams.pSysObject, 
+            pThrCntrl);
          IFXOS_SYS_THREAD_INIT_COUNT_INC(pThrCntrl->thrParams.pSysObject);
 
          pThrCntrl->pThrFct = pThreadFunction;
@@ -239,14 +241,16 @@ IFX_int32_t IFXOS_ThreadDelete(
          if (pThrCntrl->thrParams.bRunning == 1)
          {
             IFXOS_PRN_USR_ERR_NL( IFXOS, IFXOS_PRN_LEVEL_WRN,
-               ("IFXOS WRN - Thread Delete <%s> TID %d - kill, no shutdown responce" IFXOS_CRLF,
-                 pThrCntrl->thrParams.pName, pThrCntrl->tid));
+               ("IFXOS WRN - Thread Delete <%s> TID %d - kill, no shutdown "
+                "responce" IFXOS_CRLF, pThrCntrl->thrParams.pName, 
+                pThrCntrl->tid));
 
             if (taskDelete(pThrCntrl->tid) != OK)
             {
                IFXOS_PRN_USR_ERR_NL( IFXOS, IFXOS_PRN_LEVEL_ERR,
-                  ("IFXOS ERROR - Thread Delete <%s> TID %d - kill failed (mem loss ?)" IFXOS_CRLF,
-                    pThrCntrl->thrParams.pName, pThrCntrl->tid));
+                  ("IFXOS ERROR - Thread Delete <%s> TID %d - kill failed (mem "
+                   "loss ?)" IFXOS_CRLF, pThrCntrl->thrParams.pName, 
+                   pThrCntrl->tid));
 
                pThrCntrl->bValid = IFX_FALSE;
                IFXOS_SYS_OBJECT_RELEASE(pThrCntrl->thrParams.pSysObject);

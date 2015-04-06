@@ -1,8 +1,8 @@
 /******************************************************************************
 
-                               Copyright  2007
-                            Infineon Technologies AG
-                     Am Campeon 1-12; 81726 Munich, Germany
+                              Copyright (c) 2009
+                            Lantiq Deutschland GmbH
+                     Am Campeon 3; 85579 Neubiberg, Germany
 
   For licensing information, see the file 'LICENSE' in the root folder of
   this software module.
@@ -88,10 +88,7 @@ const char IFXOS_WHATVERSION[] = IFXOS_WHAT_STR;
 */
 IFXOS_STATIC int __init IFXOS_ModuleInit (void)
 {
-   printk(KERN_INFO "%s" IFXOS_CRLF, &IFXOS_WHATVERSION[4]);
-   printk(KERN_INFO "(c) Copyright 2007, Infineon Technologies AG" IFXOS_CRLF);
-
-   printk(KERN_INFO "### IFXOS - IFXOS - IFXOS - IFXOS ###" IFXOS_CRLF);
+   printk(KERN_INFO "%s (c) Copyright 2009, Lantiq Deutschland GmbH" IFXOS_CRLF, &IFXOS_WHATVERSION[4]);
 
    IFXOS_PRN_USR_LEVEL_SET(IFXOS, debug_level);
    IFXOS_PRN_INT_LEVEL_SET(IFXOS, debug_level);
@@ -147,7 +144,7 @@ EXPORT_SYMBOL(IFXOS_PRN_INT_MODULE_NAME(IFXOS));
 
 /****************************************************************************/
 
-MODULE_AUTHOR("www.infineon.com");
+MODULE_AUTHOR("www.lantiq.com");
 MODULE_DESCRIPTION("IFX - OS abstraction layer");
 MODULE_LICENSE("Dual BSD/GPL");
 

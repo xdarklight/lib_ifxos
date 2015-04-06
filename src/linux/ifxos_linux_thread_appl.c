@@ -1,8 +1,8 @@
 /******************************************************************************
 
-                               Copyright  2007
-                            Infineon Technologies AG
-                     Am Campeon 1-12; 81726 Munich, Germany
+                              Copyright (c) 2009
+                            Lantiq Deutschland GmbH
+                     Am Campeon 3; 85579 Neubiberg, Germany
 
   For licensing information, see the file 'LICENSE' in the root folder of
   this software module.
@@ -108,7 +108,7 @@ IFXOS_STATIC IFX_int32_t IFXOS_UserThreadStartup(
          return IFX_ERROR;
       }
 
-      IFXOS_PRN_USR_DBG_NL( IFXOS, IFXOS_PRN_LEVEL_HIGH,
+      IFXOS_PRN_USR_DBG_NL( IFXOS, IFXOS_PRN_LEVEL_NORMAL,
          ("IFXOS - User Thread Startup <%s>, TID %d (PID %d) - ENTER" IFXOS_CRLF,
            pThrCntrl->thrParams.pName, (IFX_int_t)pthread_self(), (IFX_int_t)getpid()));
 
@@ -116,7 +116,7 @@ IFXOS_STATIC IFX_int32_t IFXOS_UserThreadStartup(
       retVal = pThrCntrl->pThrFct(&pThrCntrl->thrParams);
       pThrCntrl->thrParams.bRunning = IFX_FALSE;
 
-      IFXOS_PRN_USR_DBG_NL( IFXOS, IFXOS_PRN_LEVEL_HIGH,
+      IFXOS_PRN_USR_DBG_NL( IFXOS, IFXOS_PRN_LEVEL_NORMAL,
          ("IFXOS - User Thread Startup <%s>, TID %d (PID %d) - EXIT" IFXOS_CRLF,
            pThrCntrl->thrParams.pName, (IFX_int_t)pthread_self(), (IFX_int_t)getpid()));
    }
@@ -171,8 +171,8 @@ IFX_int32_t IFXOS_ThreadInit(
    pthread_t            tid;
    pthread_attr_t       attr;
 
-   IFXOS_RETURN_IF_POINTER_NULL(pThreadFunction, IFX_ERROR);
-   IFXOS_RETURN_IF_POINTER_NULL(pName, IFX_ERROR);
+   if(pThreadFunction == IFX_NULL) return IFX_ERROR;
+   if(pName == IFX_NULL) return IFX_ERROR;
 
    if(pThrCntrl)
    {
@@ -208,6 +208,7 @@ IFX_int32_t IFXOS_ThreadInit(
                      (IFX_void_t*)pThrCntrl);
          if (retVal)
          {
+            pthread_attr_destroy(&attr);
             IFXOS_PRN_USR_ERR_NL( IFXOS, IFXOS_PRN_LEVEL_ERR,
                ("IFXOS ERROR - User Thread create <%s> - pthread_create = %d" IFXOS_CRLF,
                  (pName ? (pName) : "noname"), errno ));
@@ -474,17 +475,17 @@ IFX_int32_t IFXOS_ThreadPriorityModify(
       switch(policy)
       {
          case SCHED_OTHER:
-            IFXOS_PRN_USR_DBG_NL( IFXOS, IFXOS_PRN_LEVEL_HIGH,
+            IFXOS_PRN_USR_DBG_NL( IFXOS, IFXOS_PRN_LEVEL_NORMAL,
                ("IFXOS - Thread, using SCHED_OTHER (regular, non-realtime scheduling)" IFXOS_CRLF));
             break;
 
          case SCHED_RR:
-            IFXOS_PRN_USR_DBG_NL( IFXOS, IFXOS_PRN_LEVEL_HIGH,
+            IFXOS_PRN_USR_DBG_NL( IFXOS, IFXOS_PRN_LEVEL_NORMAL,
                ("IFXOS - Thread, using SCHED_RR (realtime, round-robin)" IFXOS_CRLF));
             break;
 
          case SCHED_FIFO:
-            IFXOS_PRN_USR_DBG_NL( IFXOS, IFXOS_PRN_LEVEL_HIGH,
+            IFXOS_PRN_USR_DBG_NL( IFXOS, IFXOS_PRN_LEVEL_NORMAL,
                ("IFXOS - Thread, using SCHED_FIFO (realtime, first-in first-out)" IFXOS_CRLF));
             break;
 
@@ -498,7 +499,7 @@ IFX_int32_t IFXOS_ThreadPriorityModify(
       ret = pthread_setschedparam (pthread_self(), policy, &param);
       if(ret == 0)
       {
-         IFXOS_PRN_USR_DBG_NL( IFXOS, IFXOS_PRN_LEVEL_HIGH,
+         IFXOS_PRN_USR_DBG_NL( IFXOS, IFXOS_PRN_LEVEL_NORMAL,
             ("IFXOS - Thread, Set new priority %d, policy %d" IFXOS_CRLF,
               param.sched_priority, policy));
 
