@@ -233,5 +233,5 @@ IFX_void_t IFXOS_DevFdZero(
 
 /** @} */
 
-#endif      /* #if defined(WIN32) && !defined(IFXOS_USE_DEV_IO) */
+#endif      /* #if defined(WIN32) && defined(IFXOS_USE_DEV_IO) */
 

@@ -192,9 +192,7 @@ lib_ifxos_extra_libraries = \
 	common/ifx_crc.c\
 	include/ifx_crc.h
 
-lib_ifxos_board_libraries = \
-	common/ifx_board_config.c\
-	include/ifx_board_config.h\
+lib_ifxos_ini_file_access_specific = \
 	common/ifx_ini_access.c\
 	include/ifx_ini_access.h
 
@@ -580,13 +578,13 @@ lib_ifxos_lint = \
 if ENABLE_ECOS
 lib_ifxos_specific=\
 	$(lib_ifxos_ecos)\
-	$(lib_ifxos_board_libraries)
+	$(lib_ifxos_ini_file_access_specific)
 endif
 
 if ENABLE_LINUX
 lib_ifxos_specific=\
 	$(lib_ifxos_linux)\
-	$(lib_ifxos_board_libraries)
+	$(lib_ifxos_ini_file_access_specific)
 endif
 
 if ENABLE_SUN_OS
@@ -597,19 +595,19 @@ endif
 if ENABLE_NUCLEUS
 lib_ifxos_specific=\
 	$(lib_ifxos_nucleus)\
-	$(lib_ifxos_board_libraries)
+	$(lib_ifxos_ini_file_access_specific)
 endif
 
 if ENABLE_RTEMS
 lib_ifxos_specific=\
 	$(lib_ifxos_rtems)\
-	$(lib_ifxos_board_libraries)
+	$(lib_ifxos_ini_file_access_specific)
 endif
 
 if ENABLE_GENERIC
 lib_ifxos_specific=\
 	$(lib_ifxos_generic_os)\
-	$(lib_ifxos_board_libraries)
+	$(lib_ifxos_ini_file_access_specific)
 endif
 
 libifxos_a_CFLAGS = \
@@ -639,7 +637,7 @@ if KERNEL_2_6
 drv_ifxos_OBJS = "$(subst .c,.o,$(filter %.c,$(drv_ifxos_SOURCES)))"
 
 drv_ifxos.ko: $(drv_ifxos_SOURCES)
-	@echo -e "drv_ifxos: Making Linux 2.6.x kernel object"
+	@echo "drv_ifxos: Making Linux 2.6.x kernel object"
 	if test ! -e common/ifxos_debug.c ; then \
 		echo "copy source files (as links only!)"; \
 		for f in $(filter %.c,$(drv_ifxos_SOURCES)); do \
@@ -647,10 +645,10 @@ drv_ifxos.ko: $(drv_ifxos_SOURCES)
 			cp -s $(addprefix @abs_srcdir@/,$$f) $(PWD)/`dirname $$f`/ ; \
 		done \
 	fi
-	@echo -e "# drv_ifxos: Generated to build Linux 2.6.x kernel object" > $(PWD)/Kbuild
-	@echo -e "obj-m := $(subst .ko,.o,$@)"			>> $(PWD)/Kbuild
-	@echo -e "$(subst .ko,,$@)-y := $(drv_ifxos_OBJS)"	>> $(PWD)/Kbuild
-	@echo -e "EXTRA_CFLAGS := $(CFLAGS) -DHAVE_CONFIG_H $(drv_ifxos_CFLAGS) $(DSL_DRIVER_INCL_PATH) -I@abs_srcdir@/include -I$(PWD)/include"	>> $(PWD)/Kbuild
+	@echo "# drv_ifxos: Generated to build Linux 2.6.x kernel object" > $(PWD)/Kbuild
+	@echo "obj-m := $(subst .ko,.o,$@)"			>> $(PWD)/Kbuild
+	@echo "$(subst .ko,,$@)-y := $(drv_ifxos_OBJS)"	>> $(PWD)/Kbuild
+	@echo "EXTRA_CFLAGS := $(CFLAGS) -DHAVE_CONFIG_H $(drv_ifxos_CFLAGS) $(DSL_DRIVER_INCL_PATH) -I@abs_srcdir@/include -I$(PWD)/include"	>> $(PWD)/Kbuild
 	$(MAKE) ARCH=@KERNEL_ARCH@ -C @KERNEL_BUILD_PATH@ O=@KERNEL_BUILD_PATH@ M=$(PWD) modules
 
 clean-generic:

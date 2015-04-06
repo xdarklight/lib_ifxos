@@ -33,6 +33,7 @@
 #include <linux/fs.h>
 #include <linux/wait.h>
 #include <linux/poll.h>
+#include <linux/sched.h>
 
 #include "ifx_types.h"
 #include "ifxos_rt_if_check.h"

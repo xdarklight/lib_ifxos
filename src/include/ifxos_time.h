@@ -116,7 +116,7 @@ IFX_void_t IFXOS_USecSleep(
 
 #if (defined(IFXOS_HAVE_TIME_SLEEP_MS) && (IFXOS_HAVE_TIME_SLEEP_MS == 1))
 /**
-   Sleep a given time in [ms].
+   Sleep at least the given time in [ms].
 
 \param
    sleepTime_ms   Time to sleep [ms]
@@ -126,6 +126,9 @@ IFX_void_t IFXOS_USecSleep(
 
 \remarks
    Available in Driver and Application Space space
+
+   Note that depending on the system tick setting the actual sleep time can be 
+   equal to or longer then the specified one, but never be shorter.
 */
 IFX_void_t IFXOS_MSecSleep(
                IFX_time_t sleepTime_ms);

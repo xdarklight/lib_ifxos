@@ -73,7 +73,7 @@
 #  define __BYTE_ORDER                       __BIG_ENDIAN
    /** set the common IFXOS byte order for BIG endian */
 #  define IFXOS_BYTE_ORDER                   IFXOS_BIG_ENDIAN
-#elif
+#else
 #  error "missing endian definiton"
 #endif
 

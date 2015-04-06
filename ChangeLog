@@ -1,7 +1,23 @@
 NEXT VERSION
 
+V1.5.14 - 2010-07-22
 FIX:
--
+- Portability: configure.in, Makefile.am - remove some OS specific options for the echo command.
+   (Patch V1.5.12: 100-portability.patch)
+- LINUX (Kernel 2.6.32): add include <linux/sched.h> (ifxos_linux_select_drv.c)
+   (Patch V1.5.12: 110-fix-2.6.32-wakeup.patch)
+- Byteorder: Fix compile error for byteorder detection (Little Endian might be not 
+  defined on raw big endian systems (MPC8315)
+   (Patch V1.5.12: 120-fix-linux-byteorder.patch)
+CHANGE(S):
+- remove the board config part (library application code) from the IFXOS.
+
+V1.5.13 - 2010-05-27
+FIX:
+- Win32: return value of closesocket in case of error is SOCKET_ERROR
+- Corrected include vxworks.h to vxWorks.h (compile problems on Linux)
+- Guarantee at least that the given sleep time on IFXOS_MSecSleep is applied. 
+  Previously it happened that a shorter time was used.
 ADD:
 -
 CHANGE(S):

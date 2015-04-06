@@ -19,7 +19,7 @@
 
 /**
    The version of the IFXOS is seperated into 3 numbers:
-   <interface revision> . <feature step> . <build step>
+   "<interface revision> . <feature step> . <build step>"
 
 
    - Interface Revision:
@@ -30,7 +30,7 @@
       Example:
       An already existing function gets an new parameter.
 
-      \note
+      \attention
          If a new API function is added this requires no change of the revision
          number. Therefore the feature step will be incremented.
 
@@ -105,7 +105,7 @@
 /** IFXOS version - feature */
 #define IFXOS_VERSION_FEATURE                 5
 /** IFXOS version, build number - step */
-#define IFXOS_VERSION_STEP                    12
+#define IFXOS_VERSION_STEP                    14
 
 /** IFXOS version as number */
 #define IFXOS_VER_NUMBER \

@@ -37,7 +37,7 @@
 /* ============================================================================
    IFX VxWorks adaptation - Includes
    ========================================================================= */
-#include <vxworks.h>
+#include <vxWorks.h>
 #include <ioctl.h>
 #include <selectLib.h>
 #if 0	/* fix it VxWorks 6.4 ? */

@@ -19,7 +19,7 @@
 /* ============================================================================
    IFX VxWorks adaptation - Global Includes
    ========================================================================= */
-#include <vxworks.h>
+#include <vxWorks.h>
 
 #include "ifx_types.h"
 #include "ifxos_pipe.h"

@@ -144,7 +144,7 @@ IFX_int_t IFXOS_SocketCreate(
 IFX_int_t IFXOS_SocketClose(
                   IFXOS_socket_t socketFd)
 {
-   if(!closesocket(socketFd))
+   if (closesocket(socketFd) == SOCKET_ERROR)
    {
       return IFX_ERROR;
    }

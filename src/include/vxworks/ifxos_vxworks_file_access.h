@@ -46,7 +46,7 @@
 /* ============================================================================
    IFX VxWorks adaptation - Includes
    ========================================================================= */
-#include <vxworks.h>
+#include <vxWorks.h>
 #include <stdio.h>
 #include <sys/stat.h> /* stat */
 #include <unistd.h>

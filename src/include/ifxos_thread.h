@@ -287,7 +287,7 @@ IFXOS_thread_t IFXOS_ThreadIdGet(void);
    - process ID of the current process
    - IFX_ERROR (-1) if something went wrong.
 
-\Note
+\attention
    On non multi-process systems the thread/task ID is returned.
 */
 IFXOS_process_t IFXOS_ProcessIdGet(void);

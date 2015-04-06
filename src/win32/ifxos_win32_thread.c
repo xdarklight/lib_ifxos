@@ -113,7 +113,13 @@ IFXOS_STATIC unsigned int WINAPI IFXOS_ThreadStartup(
 \param
    nStackSize        specifies the size of the thread stack - not used.
 \param
-   nPriority         specifies the thread priority, 0 will be ignored
+   nPriority         specifies the thread priority, 0 will be ignored. Possible values are:
+   - IFXOS_THREAD_PRIO_LOWEST
+   - IFXOS_THREAD_PRIO_LOW
+   - IFXOS_THREAD_PRIO_NORMAL
+   - IFXOS_THREAD_PRIO_HIGH
+   - IFXOS_THREAD_PRIO_HIGHEST
+   - IFXOS_THREAD_PRIO_TIME_CRITICAL
 \param
    nArg1             first argument passed to thread / task entry function.
 \param
@@ -121,7 +127,7 @@ IFXOS_STATIC unsigned int WINAPI IFXOS_ThreadStartup(
 
 \return
    - IFX_SUCCESS thread was successful started.
-   - IFX_ERROR thread was not deleted
+   - IFX_ERROR thread was not created
 */
 IFX_int32_t IFXOS_ThreadInit(
                IFXOS_ThreadCtrl_t *pThrCntrl,

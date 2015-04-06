@@ -19,7 +19,7 @@
 /* ============================================================================
    IFX VxWorks adaptation - Global Includes
    ========================================================================= */
-#include <vxworks.h>
+#include <vxWorks.h>
 #include <string.h>
 #include <sys/times.h>
 #include <ioLib.h>

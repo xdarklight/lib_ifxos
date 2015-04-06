@@ -43,7 +43,7 @@
 /* ============================================================================
    IFX VxWorks adaptation - Includes
    ========================================================================= */
-#include <vxworks.h>
+#include <vxWorks.h>
 #include <iosLib.h>        /* DEV_HDR */
 #include <sys/ioctl.h>     /* _IO */
 #include <netinet/in.h>
@@ -54,51 +54,60 @@
 
 /** \addtogroup IFXOS_IF_VXWORKS
 @{ */
-#ifndef _LITTLE_ENDIAN
-#  error "Missing definition for Little Endian"
-#endif
 
-#ifndef _BIG_ENDIAN
-#  error "Missing definition for Big Endian"
+#if !defined(_LITTLE_ENDIAN) && !defined(_BIG_ENDIAN)
+#  error "Missing definition for Little and Big Endian"
 #endif
 
 #ifndef _BYTE_ORDER
 #  error "Missing definition for Byte Order"
 #endif
 
-#ifndef __LITTLE_ENDIAN
-#  define __LITTLE_ENDIAN _LITTLE_ENDIAN
+
+#if !defined(__LITTLE_ENDIAN)
+#  if defined(_LITTLE_ENDIAN)
+#     define __LITTLE_ENDIAN        _LITTLE_ENDIAN
+#  endif
 #else
-#  if (__LITTLE_ENDIAN != _LITTLE_ENDIAN)
+#  if !defined(_LITTLE_ENDIAN) || (__LITTLE_ENDIAN != _LITTLE_ENDIAN)
 #     error "macro define __LITTLE_ENDIAN missmatch"
 #  endif
 #endif
 
-#ifndef __BIG_ENDIAN
-#  define __BIG_ENDIAN    _BIG_ENDIAN
+#if !defined(__BIG_ENDIAN)
+#  if defined(_BIG_ENDIAN)
+#     define __BIG_ENDIAN        _BIG_ENDIAN
+#  endif
 #else
-#  if (__BIG_ENDIAN != _BIG_ENDIAN)
+#  if !defined(_BIG_ENDIAN) || (__BIG_ENDIAN != _BIG_ENDIAN)
 #     error "macro define __BIG_ENDIAN missmatch"
 #  endif
 #endif
 
-#ifndef __BYTE_ORDER
-#  if (_BYTE_ORDER == _LITTLE_ENDIAN)
-#     define __BYTE_ORDER                 __LITTLE_ENDIAN
-#  elif (_BYTE_ORDER == _BIG_ENDIAN )
-#     define __BYTE_ORDER                 __BIG_ENDIAN
-#  else
-#     error "Unknown System Byteorder!"
+#if !defined(__BYTE_ORDER)
+#  if defined(_LITTLE_ENDIAN) && defined(__LITTLE_ENDIAN)
+#     if (_BYTE_ORDER == _LITTLE_ENDIAN)
+#        define __BYTE_ORDER                 __LITTLE_ENDIAN
+#     endif
 #  endif
+#  if defined(_BIG_ENDIAN) && defined(__BIG_ENDIAN)
+#     if (_BYTE_ORDER == _BIG_ENDIAN)
+#        define __BYTE_ORDER                 __BIG_ENDIAN
+#     endif
+#  endif
+#endif
+
+#if !defined(__BYTE_ORDER)
+#  error "Unknown System Byteorder!"
 #endif
 
 #ifndef _IFXOS_COMMON_H
 #  error "missing IFXOS endian defines, include 'ifx_common.h' at first"
 #endif
 
-#if (__BYTE_ORDER == __LITTLE_ENDIAN)
+#if defined(__LITTLE_ENDIAN) && (__BYTE_ORDER == __LITTLE_ENDIAN)
 #  define IFXOS_BYTE_ORDER                IFXOS_LITTLE_ENDIAN
-#elif (__BYTE_ORDER == __BIG_ENDIAN )
+#elif defined(__BIG_ENDIAN) && (__BYTE_ORDER == __BIG_ENDIAN )
 #  define IFXOS_BYTE_ORDER                IFXOS_BIG_ENDIAN
 #else
 #  error "no matching __BYTE_ORDER found"

@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.59)
-AC_INIT(lib_ifxos, 1.5.12, www.lantiq.com)
+AC_INIT(lib_ifxos, 1.5.14, www.lantiq.com)
 AC_CONFIG_SRCDIR([config.h.in])
 AC_CONFIG_HEADER([config.h])
 AM_INIT_AUTOMAKE
@@ -149,12 +149,12 @@ AC_ARG_ENABLE(targetincl,
 		echo Set the target image include path $enableval
 		AC_SUBST([TARGET_INCL_PATH],[$enableval])
 	else
-		echo -e Set the default target image include path $DEFAULT_TARGET_INCL_PATH
+		echo Set the default target image include path $DEFAULT_TARGET_INCL_PATH
 		AC_SUBST([TARGET_INCL_PATH],[$DEFAULT_TARGET_INCL_PATH])
 	fi
 	],
 	[
-		echo -e Set the default target image include path $DEFAULT_TARGET_INCL_PATH
+		echo Set the default target image include path $DEFAULT_TARGET_INCL_PATH
 		AC_SUBST([TARGET_INCL_PATH],[$DEFAULT_TARGET_INCL_PATH])
 	]
 )

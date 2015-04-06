@@ -20,7 +20,7 @@
    IFX VxWorks adaptation - Global Includes
    ========================================================================= */
 
-#include <vxworks.h>
+#include <vxWorks.h>
 #include <sysLib.h>
 #include <rebootLib.h>
 

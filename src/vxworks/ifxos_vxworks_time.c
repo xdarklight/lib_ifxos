@@ -119,7 +119,7 @@ IFX_void_t IFXOS_USecSleep(
 #if (defined(IFXOS_HAVE_TIME_SLEEP_MS) && (IFXOS_HAVE_TIME_SLEEP_MS == 1))
 
 /**
-   VxWorks - Sleep a given time in [ms].
+   VxWorks - Sleep at least the given time in [ms].
 
 \par Implementation
    Use the VxWorks scheduler to set the caller task into "sleep".
@@ -135,6 +135,8 @@ IFX_void_t IFXOS_USecSleep(
 
 \remarks
    sleepTime_ms = 0 force a rescheduling.
+   Note that depending on the system tick setting the actual sleep time can be 
+   equal to or longer then the specified one, but never be shorter.
 
 \remarks
    Available in Driver and Application Space
@@ -142,9 +144,17 @@ IFX_void_t IFXOS_USecSleep(
 IFX_void_t IFXOS_MSecSleep(
                IFX_time_t sleepTime_ms)
 {
-   taskDelay( (int)((sleepTime_ms==0) ? 
-                     0 : ( (sleepTime_ms <= (1000/sysClkRateGet())) ? 
-                                 1 : sleepTime_ms * sysClkRateGet() / 1000 )) );
+   if (sleepTime_ms > 0)
+   {
+      /* Get the number of ticks in ms needed for this delay */
+      sleepTime_ms *= sysClkRateGet();
+      /* round up to the next higher number if there is a 
+         remainder of the calculation */
+      sleepTime_ms += (1000 - 1);
+      sleepTime_ms /= 1000;
+   }
+   taskDelay (sleepTime_ms);
+
    return;
 }
 #endif

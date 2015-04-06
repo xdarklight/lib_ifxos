@@ -19,7 +19,7 @@
 /* ============================================================================
    IFX VxWorks adaptation - Global Includes
    ========================================================================= */
-#include <vxworks.h>
+#include <vxWorks.h>
 #include <stdio.h>
 #include <ioLib.h>
 #if 0

@@ -33,6 +33,7 @@
    IFX LINUX adaptation - Includes
    ========================================================================= */
 #ifdef __KERNEL__
+#include <linux/net.h>
 #include <linux/in.h>
 #else      
 #include <sys/types.h>

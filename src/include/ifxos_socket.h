@@ -255,12 +255,14 @@ IFX_int_t IFXOS_SocketSend(
    Sends data to datagram socket.
 
 \param
-   socFd          specifies the socket. Value has to be greater or equal zero
+   socFd          specifies the socket. Value has to be greater or equal zero.
 \param
    pBuffer        specifies the pointer to a buffer where the data will be 
-                  copied
+                  copied.
 \param
-   bufSize_byte   specifies the size in byte of the buffer 'pBuffer'
+   bufSize_byte   specifies the size in byte of the buffer 'pBuffer'.
+\param
+   pSocAddr    specifies a pointer to the IFXOS_sockAddr_t structure.
 
 \return
    Returns the number of sent bytes. Returns a negative value if an error
@@ -333,7 +335,7 @@ IFXOS_socket_t IFXOS_SocketAccept(
 \param
    pSocAddr    specifies a pointer to the socket address structure
 \param
-   pSocAddr    length of the socket address structure
+   socAddrLen  length of the socket address structure
 
 
 \return

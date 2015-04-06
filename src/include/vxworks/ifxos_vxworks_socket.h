@@ -33,7 +33,7 @@
 /* ============================================================================
    IFX VxWorks adaptation - Includes
    ========================================================================= */
-#include <vxworks.h>
+#include <vxWorks.h>
 #include <sockLib.h>
 #include <inetLib.h>
 #include <selectLib.h>
