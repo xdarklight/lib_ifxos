@@ -316,6 +316,11 @@ IFX_int_t IFXOS_EventWait(
                t.tv_sec +=  (waitTime_ms / 1000);
                t.tv_nsec += (waitTime_ms % 1000) * 1000 * 1000;
 
+               if (t.tv_nsec >= 1000000000) {
+                  t.tv_nsec -= 1000000000;
+                  t.tv_sec += 1;
+               }
+
                ret = sem_timedwait(&pEventId->object, &t);
          }
 

@@ -19,6 +19,9 @@
 /* ============================================================================
    IFX Win32 adaptation - Global Includes
    ========================================================================= */
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
 #include <windows.h>
 #include <stdio.h>
 #include <time.h>

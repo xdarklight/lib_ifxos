@@ -611,21 +611,21 @@ extern IFX_void_t IFXOS_SysObject_ClearOwnerThrInfo(
 #  define IFXOS_SYS_OBJECT_RELEASE(pSysObject)\
                /*lint -e{717} */ \
                do { \
-                  IFXOS_SysObject_Release(pSysObject); \
-                  if (pSysObject) {pSysObject = (IFX_void_t *)IFX_NULL;} \
+                  IFXOS_SysObject_Release((IFXOS_sys_object_t *)pSysObject); \
+                  if (pSysObject) {pSysObject = (IFXOS_sys_object_t *)IFX_NULL;} \
                } while(0)
 
 
 #  define IFXOS_SYSOBJECT_SET_OWNER_THR_INFO(pSysObject)\
-               IFXOS_SysObject_SetOwnerThrInfo(pSysObject)
+               IFXOS_SysObject_SetOwnerThrInfo((IFXOS_sys_object_t *)pSysObject)
 
 #  define IFXOS_SYSOBJECT_CLEAR_OWNER_THR_INFO(pSysObject)\
-               IFXOS_SysObject_ClearOwnerThrInfo(pSysObject)
+               IFXOS_SysObject_ClearOwnerThrInfo((IFXOS_sys_object_t *)pSysObject)
 
 #else
 
 #  define IFXOS_SYS_OBJECT_GET(objectType)                  IFX_NULL
-#  define IFXOS_SYS_OBJECT_RELEASE(pSysObject)              pSysObject = (IFX_void_t *)IFX_NULL
+#  define IFXOS_SYS_OBJECT_RELEASE(pSysObject)              pSysObject = (IFXOS_sys_object_t *)IFX_NULL
 #  define IFXOS_SYSOBJECT_SET_OWNER_THR_INFO(pSysObject)    /*lint -e{19} */
 #  define IFXOS_SYSOBJECT_CLEAR_OWNER_THR_INFO(pSysObject)  /*lint -e{19} */
 

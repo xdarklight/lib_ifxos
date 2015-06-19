@@ -333,28 +333,31 @@ int DEVIO_close ( const int fd )
    void *priv = NULL;
    DEVIO_device_close foo = NULL;
 
-   if ( fd >= 0 )
+   if ( fd < DEVIO_MAXFDS )
    {
-      IFXOS_MutexGet(&mutex);
-      
-      dev_no = DEVIO_fd_table[fd].device_number;
-      priv = DEVIO_fd_table[fd].priv;
-      if ( (dev_no < DEVIO_MAXDEVICES)
-           && ( ( drv_no = DEVIO_device_table[dev_no].driver_number ) < DEVIO_MAXDRIVERS ) )
+      if ( fd >= 0 )
       {
-         /* clear entry in file descriptor list */
-         DEVIO_fd_table[fd].device_number = ( -1 );
-         DEVIO_fd_table[fd].priv = NULL;
-
-         foo = DEVIO_driver_table[drv_no].device_close ;
+         IFXOS_MutexGet(&mutex);
+         
+         dev_no = DEVIO_fd_table[fd].device_number;
+         priv = DEVIO_fd_table[fd].priv;
+         if ( (dev_no < DEVIO_MAXDEVICES)
+              && ( ( drv_no = DEVIO_device_table[dev_no].driver_number ) < DEVIO_MAXDRIVERS ) )
+         {
+            /* clear entry in file descriptor list */
+            DEVIO_fd_table[fd].device_number = ( -1 );
+            DEVIO_fd_table[fd].priv = NULL;
+   
+            foo = DEVIO_driver_table[drv_no].device_close ;
+         }
+      
+         IFXOS_MutexRelease(&mutex);
       }
    
-      IFXOS_MutexRelease(&mutex);
+      if(foo)
+         nRet = foo ( priv );
    }
-
-   if(foo)
-      nRet = foo ( priv );
-
+   
    return ( nRet );
 }
 
@@ -368,24 +371,27 @@ int DEVIO_write ( const int fd, const void *pData, const unsigned int nSize )
    void *priv = NULL;
    DEVIO_device_write foo=NULL;
 
-   if ( fd >= 0 )
+   if ( fd < DEVIO_MAXFDS )
    {
-      IFXOS_MutexGet(&mutex);
-
-      dev_no = DEVIO_fd_table[fd].device_number;
-      priv = DEVIO_fd_table[fd].priv;
-      if ( (dev_no < DEVIO_MAXDEVICES)
-           && ( ( drv_no = DEVIO_device_table[dev_no].driver_number ) < DEVIO_MAXDRIVERS ) )
+      if ( fd >= 0 )
       {
-         foo = DEVIO_driver_table[drv_no].device_write;
+         IFXOS_MutexGet(&mutex);
+      
+         dev_no = DEVIO_fd_table[fd].device_number;
+         priv = DEVIO_fd_table[fd].priv;
+         if ( (dev_no < DEVIO_MAXDEVICES)
+              && ( ( drv_no = DEVIO_device_table[dev_no].driver_number ) < DEVIO_MAXDRIVERS ) )
+         {
+            foo = DEVIO_driver_table[drv_no].device_write;
+         }
+         
+         IFXOS_MutexRelease(&mutex);
       }
       
-      IFXOS_MutexRelease(&mutex);
+      if(foo)
+          nRet =  foo( priv, (const char *)pData, nSize );
    }
-
-   if(foo)
-       nRet =  foo( priv, (const char *)pData, nSize );
-
+   
    return ( nRet );
 }
 
@@ -399,24 +405,27 @@ int DEVIO_read ( const int fd, void *pData, const unsigned int nSize )
    void *priv = NULL;
    DEVIO_device_read foo=NULL;
 
-   if ( fd >= 0 )
+   if ( fd < DEVIO_MAXFDS )
    {
-      IFXOS_MutexGet(&mutex);
-
-      dev_no = DEVIO_fd_table[fd].device_number;
-      priv = DEVIO_fd_table[fd].priv;
-      if ( (dev_no < DEVIO_MAXDEVICES)
-           && ( ( drv_no = DEVIO_device_table[dev_no].driver_number ) < DEVIO_MAXDRIVERS ) )
+      if ( fd >= 0 )
       {
-         foo = DEVIO_driver_table[drv_no].device_read;
+         IFXOS_MutexGet(&mutex);
+      
+         dev_no = DEVIO_fd_table[fd].device_number;
+         priv = DEVIO_fd_table[fd].priv;
+         if ( (dev_no < DEVIO_MAXDEVICES)
+              && ( ( drv_no = DEVIO_device_table[dev_no].driver_number ) < DEVIO_MAXDRIVERS ) )
+         {
+            foo = DEVIO_driver_table[drv_no].device_read;
+         }
+      
+         IFXOS_MutexRelease(&mutex);
       }
-
-      IFXOS_MutexRelease(&mutex);
+      
+      if(foo)
+         nRet = foo ( priv, (char *)pData, nSize );    
    }
-
-   if(foo)
-      nRet = foo ( priv, (char *)pData, nSize );    
-
+   
    return ( nRet );
 }
 
@@ -430,24 +439,27 @@ int DEVIO_ioctl ( const int fd, const unsigned int cmd, IFX_ulong_t param )
    void *priv = NULL;
    DEVIO_device_ioctl foo = NULL;
 
-   if ( fd >= 0 )
+   if ( fd < DEVIO_MAXFDS )
    {
-      IFXOS_MutexGet(&mutex);
-      
-      dev_no = DEVIO_fd_table[fd].device_number;
-      priv = DEVIO_fd_table[fd].priv;
-      if ( (dev_no < DEVIO_MAXDEVICES)
-           && ( ( drv_no = DEVIO_device_table[dev_no].driver_number ) < DEVIO_MAXDRIVERS ) )
+      if ( fd >= 0 )
       {
-         foo = DEVIO_driver_table[drv_no].device_ioctl;
+         IFXOS_MutexGet(&mutex);
+         
+         dev_no = DEVIO_fd_table[fd].device_number;
+         priv = DEVIO_fd_table[fd].priv;
+         if ( (dev_no < DEVIO_MAXDEVICES)
+              && ( ( drv_no = DEVIO_device_table[dev_no].driver_number ) < DEVIO_MAXDRIVERS ) )
+         {
+            foo = DEVIO_driver_table[drv_no].device_ioctl;
+         }
+         
+         IFXOS_MutexRelease(&mutex);
       }
-      
-      IFXOS_MutexRelease(&mutex);
+   
+      if(foo)   
+         nRet = foo ( priv, cmd, param );
    }
-
-   if(foo)   
-      nRet = foo ( priv, cmd, param );
-
+   
    return ( nRet );
 }
 
@@ -456,7 +468,7 @@ int DEVIO_ioctl ( const int fd, const unsigned int cmd, IFX_ulong_t param )
    Device IO - Device select.
 
 \param
-   max_fd         max FD value within the given fd_set struct
+   max_fd         max FD value within the given fd_set struct plus 1
 \param
    read_fd_in     given FD's to check [IN]
 \param
@@ -488,28 +500,29 @@ int DEVIO_select ( const unsigned int max_fd, const DEVIO_fd_set_t * read_fd_in,
 
    while ( nRet == 0 )
    {
-      for ( fd = 0; fd <= (int)max_fd; fd++ )
+      for ( fd = 0; fd < (int)max_fd; fd++ )
       {
+         if (fd >= DEVIO_MAXFDS)
+         {
+            return -1;
+         }
          if ( read_fd_in->fds[fd] == 0 )
          {
             continue;
          }
-         if ( fd >= 0 )
+         dev_no = DEVIO_fd_table[fd].device_number;
+         priv = DEVIO_fd_table[fd].priv;
+         if ( dev_no < DEVIO_MAXDEVICES
+              && ( ( drv_no = DEVIO_device_table[dev_no].driver_number ) < DEVIO_MAXDRIVERS ) )
          {
-            dev_no = DEVIO_fd_table[fd].device_number;
-            priv = DEVIO_fd_table[fd].priv;
-            if ( dev_no < DEVIO_MAXDEVICES
-                 && ( ( drv_no = DEVIO_device_table[dev_no].driver_number ) < DEVIO_MAXDRIVERS ) )
+            if ( DEVIO_driver_table[drv_no].device_poll != NULL )
             {
-               if ( DEVIO_driver_table[drv_no].device_poll != NULL )
+               k = DEVIO_driver_table[drv_no].device_poll ( priv );
+               if ( read_fd_out && k )
                {
-                  k = DEVIO_driver_table[drv_no].device_poll ( priv );
-                  if ( read_fd_out && k )
-                  {
-                     read_fd_out->fds[fd] = 1;
-                  }
-                  nRet |= k;
+                  read_fd_out->fds[fd] = 1;
                }
+               nRet |= k;
             }
          }
       }

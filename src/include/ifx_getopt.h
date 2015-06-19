@@ -15,8 +15,10 @@
 extern "C" {
 #endif
 
-#define no_argument           0
-#define required_argument     1
+#define IFXOS_SUPPORT_GET_OPT_R	1
+
+#define no_argument		0
+#define required_argument	1
 
 /* define own externals */
 extern char *optarg;
@@ -26,14 +28,27 @@ extern int optind;
    is also not defined */
 struct option
 {
-   char *name;
-   int parameter;
-   int dummy;
-   char val;
+	char *name;
+	int parameter;
+	int dummy;
+	char val;
 };
 
-extern int getopt_long (int argc, char *argv[],
-const char *long_option_string, struct option *pOptions, int *option_index);
+extern int getopt_long(
+	int argc,
+	char *argv[],
+	const char *long_option_string,
+	struct option *pOptions,
+	int *option_index);
+
+extern int getopt_long_r(
+	int argc,
+	char *argv[],
+	const char *long_option_string,
+	struct option *pOptions,
+	int *option_index,
+	char **pp_optarg,
+	int *p_optind);
 
 #ifdef __cplusplus
 }

@@ -292,6 +292,8 @@ IFX_void_t IFX_FifoTest(IFX_void_t)
 IFX_return_t IFX_Var_Fifo_Init (IFX_VFIFO* pFifo, IFX_ulong_t* pStart,
                           IFX_ulong_t* pEnd, IFX_uint32_t maxElSize)
 {
+   if (pFifo == IFX_NULL)
+      return IFX_ERROR;
 
    /* Check if pStart and pEnd are word aligned pointers */
    {
@@ -369,7 +371,7 @@ IFX_ulong_t* IFX_Var_Fifo_readElement (IFX_VFIFO *pFifo, IFX_uint32_t *elSizeB)
       return IFX_NULL;
    }
 
-   if ((pFifo->pRead[0] == ~0) ||
+   if ((pFifo->pRead[0] == (IFX_ulong_t)~0) ||
        ((pFifo->pEnd - pFifo->pRead) <= (SIZE_HEADER + SIZE_TRAILER)))
    {
       pFifo->pRead = pFifo->pStart;
@@ -394,7 +396,7 @@ IFX_ulong_t* IFX_Var_Fifo_readElement (IFX_VFIFO *pFifo, IFX_uint32_t *elSizeB)
             (IFX_FIFO_PREFIX "ERROR - var read: overwrite occured: 0x%lX, pEnd: 0x%lX, elSize: 0x%08lX (+ 0x%X) !!" IFXOS_CRLF,
             (IFX_ulong_t)pFifo->pRead, (IFX_ulong_t)pFifo->pEnd, elSizeUL, (SIZE_HEADER + SIZE_TRAILER)));
 
-      pFifo->pRead[elSizeUL + SIZE_HEADER] = ~0;
+      pFifo->pRead[elSizeUL + SIZE_HEADER] = (IFX_ulong_t)~0;
    }
 #endif
 
@@ -454,7 +456,7 @@ IFX_ulong_t* IFX_Var_Fifo_peekElement (IFX_VFIFO *pFifo, IFX_uint32_t *elSizeB)
       return IFX_NULL;
    }
 
-   if ((pPeekRead[0] == ~0) ||
+   if ((pPeekRead[0] == (IFX_ulong_t)~0) ||
        ((pFifo->pEnd - pPeekRead) <= (SIZE_HEADER + SIZE_TRAILER)))
    {
       pPeekRead = pFifo->pStart;
@@ -479,7 +481,7 @@ IFX_ulong_t* IFX_Var_Fifo_peekElement (IFX_VFIFO *pFifo, IFX_uint32_t *elSizeB)
             (IFX_FIFO_PREFIX "ERROR - var peek: overwrite occured: 0x%lX, pEnd: 0x%lX, elSize: 0x%08lX (+ 0x%X) !!" IFXOS_CRLF,
             (IFX_ulong_t)pPeekRead, (IFX_ulong_t)pFifo->pEnd, elSizeUL, (SIZE_HEADER + SIZE_TRAILER)));
 
-      pPeekRead[elSizeUL + SIZE_HEADER] = ~0;
+      pPeekRead[elSizeUL + SIZE_HEADER] = (IFX_ulong_t)~0;
    }
 #endif
 
@@ -588,7 +590,7 @@ IFX_ulong_t* IFX_Var_Fifo_writeElement (IFX_VFIFO *pFifo, IFX_uint32_t elSizeB)
       {
          if ((pFifo->pEnd - pFifo->pWrite) >= SIZE_HEADER)
          {
-            pFifo->pWrite[0] = ~0;
+            pFifo->pWrite[0] = (IFX_ulong_t)~0;
          }
          pFifo->pWrite = pFifo->pStart;
       }

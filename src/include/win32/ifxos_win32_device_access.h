@@ -40,7 +40,7 @@
 #if (defined(IFXOS_USE_DEV_IO) && (IFXOS_USE_DEV_IO == 1))
 #include "ifxos_device_io.h"
 #endif
-#include <winsock.h>         /* _IO define */
+#include <Winsock2.h>         /* _IO define */
 
 /* ============================================================================
    IFX Win32 adaptation - supported features

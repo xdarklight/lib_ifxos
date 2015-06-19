@@ -55,8 +55,10 @@ typedef unsigned int             IFX_uint32_t;
 typedef signed int               IFX_int32_t;
 /** This is the float datatype. */
 typedef float                    IFX_float_t;
-/** This is the void datatype. */
-typedef void                     IFX_void_t;
+/** This is the void datatype.
+   It is only a define to be sure, the type
+   is "exactly" the same for C++ comatibility! */
+#define IFX_void_t               void
 
 
 #if defined(IFX_64) && (IFX_64 == 1)
@@ -211,7 +213,11 @@ typedef enum {
 } IFX_return_t;
 
 /** NULL pointer */
+#ifdef __cplusplus
+#define IFX_NULL         0
+#else
 #define IFX_NULL         ((IFX_void_t *)0)
+#endif
 /*@}*/ /* IFX_BASIC_TYPES */
 
 #endif /* _IFX_TYPES_H */

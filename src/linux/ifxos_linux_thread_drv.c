@@ -34,7 +34,9 @@
 #include <linux/sched.h>
 #include <linux/version.h>
 #include <linux/completion.h>
+#if (LINUX_VERSION_CODE < KERNEL_VERSION(2,6,33))
 #include <linux/smp_lock.h>
+#endif
 #include <linux/signal.h>
 
 
@@ -147,7 +149,8 @@ IFXOS_STATIC IFX_int32_t IFXOS_KernelThreadStartup(
    allow_signal(SIGTERM);
 #endif
 
-   IFXOS_ThreadPriorityModify(pThrCntrl->nPriority);
+   if (pThrCntrl->nPriority)
+      IFXOS_ThreadPriorityModify(pThrCntrl->nPriority);
 
    pThrCntrl->thrParams.bRunning = IFX_TRUE;
    retVal = pThrCntrl->pThrFct(&pThrCntrl->thrParams);

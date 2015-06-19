@@ -20,6 +20,9 @@
    IFX Win32 adaptation - Global Includes
    ========================================================================= */
 #include <stdlib.h>
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
 #include <windows.h>
 
 #include "ifx_types.h"
@@ -59,6 +62,8 @@ IFX_void_t *IFXOS_BlockAlloc(
    IFX_void_t *pMemBlock = IFX_NULL;
 
    pMemBlock = (IFX_void_t *)malloc((size_t)memSize_byte + sizeof(IFX_ulong_t));
+   if (pMemBlock == IFX_NULL)
+	   return IFX_NULL;
 
    *((IFX_ulong_t*)(pMemBlock)) = memSize_byte;
    
@@ -123,6 +128,8 @@ IFX_void_t *IFXOS_MemAlloc(
    IFX_void_t *pMemBlock = IFX_NULL;
 
    pMemBlock = (IFX_void_t*)malloc((size_t)memSize_byte + sizeof(IFX_ulong_t));
+   if (pMemBlock == IFX_NULL)
+	   return IFX_NULL;
 
    *((IFX_ulong_t*)(pMemBlock)) = memSize_byte;
 

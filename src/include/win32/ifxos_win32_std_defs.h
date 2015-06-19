@@ -28,6 +28,9 @@ extern "C"
 
 #define strtok_r(a,b,c) strtok(a,b)
 
+/* mapping for non-standard function declarations by Microsoft */
+#define snprintf _snprintf
+
 #ifdef __cplusplus
 /* extern "C" */
 }

@@ -35,6 +35,9 @@
 /* ============================================================================
    IFX Win32 adaptation - Includes
    ========================================================================= */
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
 #include <windows.h>
 
 #include "ifx_types.h"

@@ -33,8 +33,7 @@
    IFX Win32 adaptation - Includes
    ========================================================================= */
 #include "ifx_types.h"
-#include <winsock.h>
-/* #include <Winsock2.h> */
+#include <Winsock2.h>
 
 /* ============================================================================
    IFX Win32 adaptation - supported features

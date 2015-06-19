@@ -121,17 +121,17 @@
 @{ */
 
 /** Define the used CR/LF sequence */
-#define IFXOS_CRLF                              "\n\r"
+#define IFXOS_CRLF                              "\n"
 
    /** Kernel - Debug Print on Int-Level (formated) */
-#define IFXOS_DBG_PRINT_INT(fmt, args...)       printk(KERN_DEBUG fmt "\r", ##args)
+#define IFXOS_DBG_PRINT_INT(fmt, args...)       printk(KERN_DEBUG fmt "\n", ##args)
    /** Kernel - Debug Print on Appl-Level (formated) */
-#define IFXOS_DBG_PRINT_USR(fmt, args...)       printk(KERN_DEBUG fmt "\r", ##args)
+#define IFXOS_DBG_PRINT_USR(fmt, args...)       printk(KERN_DEBUG fmt "\n", ##args)
 
    /** Kernel - Error Print on Int-Level (formated) */
-#define IFXOS_ERR_PRINT_INT(fmt, args...)       printk(KERN_DEBUG fmt "\r", ##args)
+#define IFXOS_ERR_PRINT_INT(fmt, args...)       printk(KERN_DEBUG fmt "\n", ##args)
    /** Kernel - Error Print on Appl-Level (formated) */
-#define IFXOS_ERR_PRINT_USR(fmt, args...)       printk(KERN_DEBUG fmt "\r", ##args)
+#define IFXOS_ERR_PRINT_USR(fmt, args...)       printk(KERN_DEBUG fmt "\n", ##args)
 
 
    /** Kernel - Print on Int-Level (unformated) */
@@ -149,7 +149,7 @@
 @{ */
 
 /** Define the used CR/LF sequence */
-#  define IFXOS_CRLF                            "\n\r"
+#  define IFXOS_CRLF                            "\n"
 
    /** User - Debug Print on Int-Level (formated) */
 #  define IFXOS_DBG_PRINT_INT                   IFXOS_fctDbgPrintf

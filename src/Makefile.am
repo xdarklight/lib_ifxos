@@ -253,6 +253,7 @@ lib_ifxos_linux = \
 	linux/ifxos_linux_termios_appl.c\
 	linux/ifxos_linux_thread_appl.c\
 	linux/ifxos_linux_time_appl.c\
+	linux/ifxos_linux_event_appl.c\
 	include/linux/ifxos_linux_common.h\
 	include/linux/ifxos_linux_device_access.h\
 	include/linux/ifxos_linux_event.h\
@@ -296,7 +297,6 @@ else
 lib_ifxos_linux += \
 	linux/ifxos_linux_copy_user_space_appl.c\
 	linux/ifxos_linux_memory_map_appl.c\
-	linux/ifxos_linux_event_appl.c\
 	linux/ifxos_linux_select_appl.c
 
 endif
@@ -648,7 +648,7 @@ drv_ifxos.ko: $(drv_ifxos_SOURCES)
 	@echo "# drv_ifxos: Generated to build Linux 2.6.x kernel object" > $(PWD)/Kbuild
 	@echo "obj-m := $(subst .ko,.o,$@)"			>> $(PWD)/Kbuild
 	@echo "$(subst .ko,,$@)-y := $(drv_ifxos_OBJS)"	>> $(PWD)/Kbuild
-	@echo "EXTRA_CFLAGS := $(CFLAGS) -DHAVE_CONFIG_H $(drv_ifxos_CFLAGS) $(DSL_DRIVER_INCL_PATH) -I@abs_srcdir@/include -I$(PWD)/include"	>> $(PWD)/Kbuild
+	@echo "EXTRA_CFLAGS := -DHAVE_CONFIG_H $(drv_ifxos_CFLAGS) $(DSL_DRIVER_INCL_PATH) -I@abs_srcdir@/include -I$(PWD)/include"	>> $(PWD)/Kbuild
 	$(MAKE) ARCH=@KERNEL_ARCH@ -C @KERNEL_BUILD_PATH@ O=@KERNEL_BUILD_PATH@ M=$(PWD) modules
 
 clean-generic:

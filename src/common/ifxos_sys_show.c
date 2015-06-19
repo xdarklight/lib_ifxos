@@ -467,7 +467,7 @@ IFXOS_STATIC IFX_int_t IFXOS_SysObject_LockRelease(
 */
 
 /** global debug object control */
-IFXOS_sys_object_cntrl_t IFXOS_sysObjectControl = {0};
+IFXOS_sys_object_cntrl_t IFXOS_sysObjectControl = {IFX_FALSE};
 
 /** global debug object buffer */
 IFXOS_sys_object_t IFXOS_sysObjectBuffer[IFXOS_SYS_MAX_OBJECT] = {{0}};

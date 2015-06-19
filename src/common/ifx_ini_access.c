@@ -47,10 +47,14 @@ IFX_int32_t GetKeyInt(
    IFX_int32_t nDefault,      /**< return value if key name not found */
    IFX_char_t* pFile          /**< pointer to file data (array with \0 at end) */)
 {
-   IFX_char_t  RetString[15];
+   IFX_char_t  RetString[15], sDefault[15];
    IFX_int32_t ret = nDefault;
 
-   if ( GetKeyString(pSectionName, pKeyName, "", &RetString[0], sizeof(RetString), pFile) > 0 )
+   snprintf(sDefault, sizeof(sDefault), "%d", nDefault);
+   RetString[sizeof(sDefault)-1] = '\0';
+
+   if ( GetKeyString(pSectionName, pKeyName, sDefault, &RetString[0],
+      sizeof(RetString), pFile) > 0 )
    {
       /* get assigned value of the key and return */
       if ( RetString[0] == '0' && RetString[1] == 'x' )
@@ -110,10 +114,10 @@ IFX_int32_t GetKeyString(
 
    pInput = pFile;
 
-	pLine = (IFX_char_t *)IFXOS_MemAlloc(IFX_INI_LINE_LENGTH);
-	if(pLine == IFX_NULL) {
-		return IFX_ERROR;
-	}
+   pLine = (IFX_char_t *)IFXOS_MemAlloc(IFX_INI_LINE_LENGTH);
+   if (pLine == IFX_NULL) {
+      return IFX_ERROR;
+   }
 
    do
    {
@@ -168,7 +172,7 @@ IFX_int32_t GetKeyString(
                /* get assigned value of the key and return */
                strncpy(pRetString, pVal, nSize-1);
                /* make sure, we have an end marker */
-               *(pRetString+nSize-1) = '\0';
+               pRetString[nSize-1] = '\0';
                ret = (IFX_int32_t)strlen(pRetString);
                break;
             }
@@ -184,13 +188,13 @@ IFX_int32_t GetKeyString(
       if (pDefault != IFX_NULL)
       {
          strncpy(pRetString, pDefault, nSize-1);
-			/* make sure, we have an end marker */
-			*(pRetString+nSize-1) = '\0';
+         /* make sure, we have an end marker */
+         pRetString[nSize-1] = '\0';
+         ret = (IFX_int32_t)strlen(pRetString);
       }
-      ret = (IFX_int32_t)strlen(pRetString);
    }
 
-	IFXOS_MemFree(pLine);
+   IFXOS_MemFree(pLine);
 
    return ret;
 }
@@ -223,13 +227,13 @@ IFX_int32_t GetSection(
 
    pInput = pFile;
 
-	pLine = (IFX_char_t *)IFXOS_MemAlloc(IFX_INI_LINE_LENGTH);
-	if(pLine == IFX_NULL) 
-	{
-		return IFX_ERROR;
-	}
+   pLine = (IFX_char_t *)IFXOS_MemAlloc(IFX_INI_LINE_LENGTH);
+   if(pLine == IFX_NULL) 
+   {
+      return IFX_ERROR;
+   }
 
-	do
+   do
    {
       /* search the section start */
       pSectStart=pInput;
@@ -299,7 +303,7 @@ IFX_int32_t GetSection(
    memcpy (pBuffer, pSectStart, nSectLen);
    pBuffer[nSectLen] = '\0';
 
-	IFXOS_MemFree(pLine);
+   IFXOS_MemFree(pLine);
 
    return nSectLen+1;
 }

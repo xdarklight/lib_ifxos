@@ -51,22 +51,16 @@
 @{ */
 #if ( defined(IFXOS_HAVE_TERMIOS) && (IFXOS_HAVE_TERMIOS == 1) )
 
-IFXOS_STATIC struct termios stored_stdin_settings,
-                            stored_stdout_settings;
-
-
 /**
    Disable the local echo of the console.
 */   
 IFX_void_t IFXOS_EchoOff (void)
 {
-   struct termios new_settings;
+   struct termios settings;
 
-   tcgetattr(fileno(stdout),&stored_stdout_settings);
-   new_settings = stored_stdout_settings;
-   new_settings.c_lflag &= (~ECHO);
-   tcsetattr(fileno(stdout),TCSANOW,&new_settings);
-   return;
+   tcgetattr(fileno(stdin), &settings);
+   settings.c_lflag &= ~(ECHO | ECHOE | ECHOK | ECHONL);
+   tcsetattr(fileno(stdin), TCSANOW, &settings);
 }
 
 /**
@@ -74,8 +68,11 @@ IFX_void_t IFXOS_EchoOff (void)
 */   
 IFX_void_t IFXOS_EchoOn (void)
 {
-   tcsetattr(fileno(stdout),TCSANOW,&stored_stdout_settings);
-   return;
+   struct termios settings;
+
+   tcgetattr(fileno(stdin), &settings);
+   settings.c_lflag |= ECHO | ECHOE | ECHOK | ECHONL;
+   tcsetattr(fileno(stdin), TCSANOW, &settings);
 }
 
 /**
@@ -85,20 +82,14 @@ IFX_void_t IFXOS_EchoOn (void)
 */   
 IFX_void_t IFXOS_KeypressSet (void)
 {
-   struct termios new_settings;
+   struct termios settings;
 
-   tcgetattr(fileno(stdin),&stored_stdin_settings);
-
-   new_settings = stored_stdin_settings;
+   tcgetattr(fileno(stdin), &settings);
 
    /* Disable canonical mode */
-   new_settings.c_lflag &= ~(ICANON);
-   /* set buffer size to 0 byte / timeout 100 ms */
-   new_settings.c_cc[VTIME] = 10;
-   new_settings.c_cc[VMIN] = 0;
+   settings.c_lflag &= ~(ICANON);
 
-   tcsetattr(fileno(stdin),TCSANOW,&new_settings);
-   return;
+   tcsetattr(fileno(stdin),TCSANOW,&settings);
 }
 
 /**
@@ -107,8 +98,14 @@ IFX_void_t IFXOS_KeypressSet (void)
 */   
 IFX_void_t IFXOS_KeypressReset (void)
 {
-   tcsetattr(fileno(stdin),TCSANOW,&stored_stdin_settings);
-   return;
+   struct termios settings;
+
+   tcgetattr(fileno(stdin), &settings);
+
+   /* Enable canonical mode */
+   settings.c_lflag |= ICANON;
+
+   tcsetattr(fileno(stdin),TCSANOW,&settings);
 }
 #endif   /* #if ( defined(IFXOS_HAVE_TERMIOS) && (IFXOS_HAVE_TERMIOS == 1) ) */
 
